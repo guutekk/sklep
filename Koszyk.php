@@ -9,13 +9,49 @@ session_start();
 
     $id_klienta = $_SESSION['id'];
     $sql = "SELECT c.Ilosc, c.Id_klienta,c.Id_produktu, p.Nazwa, p.Cena FROM carts c JOIN products p USING(Id_produktu) WHERE c.Id_klienta = $id_klienta";
-    $result = mysqli_query($connect, $sql);
-
-    $cena = 0;    
+    $result = mysqli_query($connect, $sql);    
 
     if(mysqli_num_rows($result)>0){
     }else{
         $error[]= "Koszyk jest pusty! Nic nie znajduje się obecnie w koszyku";
+    }
+
+    if(isset($_POST['zmniejsz']))
+    {
+        $id_produktu = $_POST['id_produktu'];
+        $sql_zmniejsz = "SELECT Ilosc FROM carts WHERE Id_produktu = $id_produktu AND Id_klienta = $id_klienta";
+        $result1 = mysqli_query($connect, $sql_zmniejsz);
+        $row1 = mysqli_fetch_assoc($result1);
+        
+        $ilosc = $row1['Ilosc'];
+        $wynik = $ilosc-1;
+
+        if($wynik>0)
+        {
+            $sql_udpate = "UPDATE carts SET Ilosc = $wynik WHERE Id_produktu = $id_produktu AND Id_klienta = $id_klienta";
+            mysqli_query($connect, $sql_udpate);
+            header("Location: Koszyk.php");
+        }
+    }
+
+    if(isset($_POST['zwieksz']))
+    {
+        $id_produktu = $_POST['id_produktu'];
+        $sql_zwieksz = "SELECT c.Ilosc ilosc_koszyk, p.Ilosc ilosc_produkt FROM carts c JOIN products p WHERE c.Id_produktu = $id_produktu AND p.Id_produktu = $id_produktu AND c.Id_klienta = $id_klienta";
+        $result_zwieksz = mysqli_query($connect, $sql_zwieksz);
+        $row_zwieksz = mysqli_fetch_assoc($result_zwieksz);
+
+        $ilosc_koszyk = $row_zwieksz['ilosc_koszyk'];
+        $ilosc_produkt = $row_zwieksz['ilosc_produkt'];
+
+        $wynik = $ilosc_koszyk+1;
+
+        if($ilosc_koszyk<$ilosc_produkt)
+        {
+            $sql_udpate = "UPDATE carts SET Ilosc = $wynik WHERE Id_produktu = $id_produktu AND Id_klienta = $id_klienta";
+            mysqli_query($connect, $sql_udpate);
+            header("Location: Koszyk.php");
+        }
     }
 ?>
 <!DOCTYPE html>
@@ -102,10 +138,10 @@ session_start();
                         $cena_suma=0;
                         for($i=0; $i<mysqli_num_rows($result); $i++)
                         {
-                            $row1 = mysqli_fetch_assoc($result);
+                            $row = mysqli_fetch_assoc($result);
 
-                            $ilosc = $row1['Ilosc'];
-                            $cena = $row1['Cena'];
+                            $ilosc = $row['Ilosc'];
+                            $cena = $row['Cena'];
 
                             if($ilosc>1)
                             {
@@ -116,27 +152,32 @@ session_start();
                             echo"
                                 <tr> 
                                     <td>
-                                        <a href='produkt.php?id=$row1[Id_produktu]'>
+                                        <a href='produkt.php?id=$row[Id_produktu]'>
                                             <img src='images/aura.png'>
                                         </a>
                                     </td>
                                     <td>
-                                        <a href='produkt.php?id=$row1[Id_produktu]'>
-                                            <h3>$row1[Nazwa]</h3>
+                                        <a href='produkt.php?id=$row[Id_produktu]'>
+                                            <h3>$row[Nazwa]</h3>
                                         </a>
                                     </td>
                                     <td>
                                         <h3>
                                             Ilość: 
-                                            <input type='number' min='1' max='10' value='$row1[Ilosc]'>
+                                            <form method='POST'>
+                                                <button name='zmniejsz' class='btn-ammount'>-</button>
+                                                <input type='hidden' name='id_produktu' value='$row[Id_produktu]'>
+                                                <input type='number' readonly = 'enable' value='$row[Ilosc]'>
+                                                <button name='zwieksz' class='btn-ammount'>+</button>
+                                            </form>
                                         </h3>
                                     </td>
                                     <td>
-                                        <h3>Cena: $row1[Cena]zł</h3>
+                                        <h3>Cena: $row[Cena]zł</h3>
                                     </td>
                                     <td>
                                         <td>
-                                            <a class='btn' href='Koszyk_modyfikacje.php?mode=usun&id_produktu=$row1[Id_produktu]'>Usuń z koszyka</a>
+                                            <a class='btn' href='Koszyk_modyfikacje.php?mode=usun&id_produktu=$row[Id_produktu]'>Usuń z koszyka</a>
                                         </td>
                                     </td>
                                 </tr>

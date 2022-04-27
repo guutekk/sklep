@@ -4,7 +4,7 @@
     $id_klienta = $_SESSION['id'];
     $id_produktu =$_GET['id_produktu'];
     
-    $sql1 = "SELECT * FROM carts WHERE Id_produktu = $id_produktu";
+    $sql1 = "SELECT * FROM carts WHERE Id_produktu = $id_produktu AND Id_klienta = $id_klienta";
     $result = mysqli_query($connect, $sql1);
     $row = mysqli_fetch_assoc($result);
 

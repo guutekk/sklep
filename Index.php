@@ -1,6 +1,7 @@
 <?php
 	//tworzenie sesji
 	session_start();
+	
 	//laczenie z baza
 	$connect=new mysqli('localhost', 'root', '', 'sklep');
 

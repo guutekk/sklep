@@ -163,4 +163,34 @@ hr{
     padding-bottom: 30px;
     text-decoration: none;
     color: black;
-} 
+}
+ 
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.btn-ammount{
+    height: 40px;
+    width: 40px;
+    color: #fff;
+    background: black;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 25px;
+    border: 3px solid black;
+    transition-duration: 0.4s;
+}
+
+.btn-ammount:hover{
+    background: white;
+    color: black;
+    border: 3px solid black;
+}
