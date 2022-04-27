@@ -1,0 +1,50 @@
+.products-container{
+    padding: 180px;
+    overflow-wrap: normal;
+}
+
+.products-container h1{
+    font-size: 30px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.products-container table {
+    border-collapse: collapse;
+    width: 100%;
+  }  
+
+.products-container td {
+    padding: 40px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+  }
+
+.products-container .error{
+    margin: 10px 0;
+    display: block;
+    background: crimson;
+    color: #fff;
+    border-radius: 5px;
+    font-size: 20px;
+    padding: 10px;
+}
+
+.products-container input{
+    width: 100%;
+    padding: 10px 15px;
+    font-size: 18px;
+    margin: 1px 0;
+}
+.swiper {
+    width: 100%;
+    height: 100%;
+  }
+
+  .swiper-slide {
+    font-size: 18px;
+    height: auto;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 30px;
+  }
