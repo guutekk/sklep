@@ -4,7 +4,7 @@ $connect=new mysqli('localhost', 'root', '', 'sklep');
 
 if(!isset($_SESSION['user']) && !isset($_SESSION['nazwisko']) && !isset($_SESSION['email']) && !isset($_SESSION['haslo'])) {
     header('Location: index.php');
-}else{
+}
     if(isset($_POST['submit'])){
 
             $name = $_POST['imie'];
@@ -72,11 +72,10 @@ if(!isset($_SESSION['user']) && !isset($_SESSION['nazwisko']) && !isset($_SESSIO
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Bigibongo Shop</title>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/ustawienia_style.css">
 
 </head>
 <body>
-    <div class="full-page">
     <div class="navbar">
 			<div>
 				<a href="index.php" class="logo"><ion-icon name="bag"></ion-icon>Bigibongo Shop</a>
@@ -115,74 +114,74 @@ if(!isset($_SESSION['user']) && !isset($_SESSION['nazwisko']) && !isset($_SESSIO
 				</ul>
 			</nav>
 		</div>
-        <section>
+    <section>
         <div class="settings-container">
-                    <h1>Moje dane</h1><br>
-                    <?php 
-                         if(isset($error)){
-                            foreach($error as $error){
-                                echo '<span class="error">'.$error.'</span>';
-                            };
-                        };
-                    ?>
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td>Imię</td>
-                                <td>
-                                    <form method="POST">
-                                    <input type="text" name = "imie" minlength="3" value= "<?php echo $_SESSION['user'];?>">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Nazwisko</td>
-                                <td>
-                                    <input type="text" name = "nazwisko" minlength="3" value= "<?php echo $_SESSION['nazwisko'];?>">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Telefon</td>
-                                <td>
-                                    <input type="text" name = "telefon" minlength="9" maxlength="9" value= "<?php echo $_SESSION['telefon'];?>">
-                                </td>
-                            </td>
-                            <tr>
-                                <td>Nowe haslo</td>
-                                <td>
-                                    <input type="password" name = "pass" minlength="6" value="">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Powtórz nowe haslo</td>
-                                <td>
-                                    <input type="password" name = "cpass" minlength="6" value="">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">
-                                    <input type="submit" name="submit" class="btn" value="Zapisz zmiany" >
-                                    </form>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+            <h1>Moje dane</h1><br>
+            <?php 
+                    if(isset($error)){
+                    foreach($error as $error){
+                        echo '<span class="error">'.$error.'</span>';
+                    };
+                };
+            ?>
+            <table>
+                <tbody>
+                    <tr>
+                        <td>Imię</td>
+                        <td>
+                            <form method="POST">
+                            <input type="text" name = "imie" minlength="3" value= "<?php echo $_SESSION['user'];?>">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Nazwisko</td>
+                        <td>
+                            <input type="text" name = "nazwisko" minlength="3" value= "<?php echo $_SESSION['nazwisko'];?>">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Telefon</td>
+                        <td>
+                            <input type="text" name = "telefon" minlength="9" maxlength="9" value= "<?php echo $_SESSION['telefon'];?>">
+                        </td>
+                    </td>
+                    <tr>
+                        <td>Nowe haslo</td>
+                        <td>
+                            <input type="password" name = "pass" minlength="6" value="">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Powtórz nowe haslo</td>
+                        <td>
+                            <input type="password" name = "cpass" minlength="6" value="">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <button name="submit" class="btn">Zapisz zmiany</button><br>
+                            </form>
+                            <a href="Ustawienia.php" class="btn">Powrót</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-        </section>
-	</div>
+    </section>
+
     <footer>
-			<hr>
-			<div style="text-align: center; padding-bottom:30px;">
-				<h2 class ="contact-h2">BIGIBONGOSHOP.COM</h2>
-				<p class ="contact-p">ul. Marka Ligasa 15</p>
-				<p class ="contact-p">43-300 Limanowa</p>
-				<p class ="contact-p">sklep@bigibongo.com</p>
-			</div>
-		</footer>
+        <hr>
+        <div style="text-align: center; padding-bottom:30px;">
+            <h2 class ="contact-h2">BIGIBONGOSHOP.COM</h2>
+            <p class ="contact-p">ul. Marka Ligasa 15</p>
+            <p class ="contact-p">43-300 Limanowa</p>
+            <p class ="contact-p">sklep@bigibongo.com</p>
+        </div>
+    </footer>
+
+    
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 	<script src="js/script.js"></script>
 </body>
 </html>
-<?php
-}
-?>

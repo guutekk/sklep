@@ -196,7 +196,7 @@ session_start();
                         <table>
                             <tr>
                                 <td>
-                                    Cena:
+                                    Suma:
                                 </td>
                                 <td>".
                                     $cena_suma

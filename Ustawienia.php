@@ -1,10 +1,20 @@
 <?php
- session_start(); 
-if (!isset($_SESSION['user']) && !isset($_SESSION['nazwisko']) && !isset($_SESSION['email']) && !isset($_SESSION['haslo']) && !isset($_SESSION['telefon'])) {
-    header('Location: index.php');
-}else{
-?>
+	session_start(); 
+	if (!isset($_SESSION['user'])) {
+		header('Location: index.php');
+	}
 
+	$connect=new mysqli('localhost', 'root', '', 'sklep');
+	$id_klienta = $_SESSION['id'];
+
+	$sql = "SELECT * FROM accounts_address WHERE Id_klienta = $id_klienta";
+	$result = mysqli_query($connect, $sql);
+
+	if(mysqli_num_rows($result)<1)
+	{
+		$error ='Brak uzupelnionych danych';
+	}
+?>
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -13,7 +23,7 @@ if (!isset($_SESSION['user']) && !isset($_SESSION['nazwisko']) && !isset($_SESSI
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Bigibongo Shop</title>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/ustawienia_style.css">
 
 </head>
 <body>
@@ -90,7 +100,13 @@ if (!isset($_SESSION['user']) && !isset($_SESSION['nazwisko']) && !isset($_SESSI
                         </tr>
                         <tr>
                             <td colspan="2">
-                                <a href="Ustawienia_dane.php" class="btn">Edytuj dane</a>
+                                <a href="Ustawienia_dane.php" class="btn">Edytuj dane</a><br>
+								<?php
+									if(isset($error))
+									{
+										echo"<a href='Ustawienia_zamieszkanie.php' class='btn'>Dodaj adres zamieszkania</a>";
+									}
+								?>
                             </td>
                         </tr>
                     </table>
@@ -111,6 +127,3 @@ if (!isset($_SESSION['user']) && !isset($_SESSION['nazwisko']) && !isset($_SESSI
 	<script src="js/script.js"></script>
 </body>
 </html>
-<?php
-}
-?>

@@ -1,6 +1,6 @@
 <?php
 	session_start(); 
-	if (!isset($_SESSION['user']) && !isset($_SESSION['nazwisko']) && !isset($_SESSION['email']) && !isset($_SESSION['haslo']) && !isset($_SESSION['telefon']) || !$_SESSION['type']==1) {
+	if (!isset($_SESSION['user']) || !$_SESSION['type']==1) {
 		header('Location: ../index.php');
 	}
 
