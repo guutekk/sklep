@@ -7,6 +7,20 @@
 	$connect=new mysqli('localhost', 'root', '', 'sklep');
 	$sql = "SELECT * FROM products";
 	$result = mysqli_query($connect, $sql);
+
+	if(isset($_POST['submit_usun']))
+	{
+		$id_produktu = $_POST['id_produktu'];
+		$sql = "DELETE FROM products WHERE Id_produktu = $id_produktu";
+		mysqli_query($connect, $sql);
+		header("Location: Produkty.php");
+	}
+
+	if(isset($_POST['submit_edycja']))
+	{
+		$id_produktu = $_POST['id_produktu'];
+		header("Location: Produkty_edytuj.php?id=$id_produktu");
+	}
 ?>
 <!DOCTYPE html>
 <html lang="pl">
@@ -66,18 +80,46 @@
 				</ul>
 			</nav>
  		</div>
-		
-		<div class='list-container'>
-			<h1>
-				Witaj,
-				<?php
-					echo $_SESSION['user'];
-				?>
-				w panelu admina!
+
+		<div class="list-container">
+			<h1 style="text-align: center">
+				Lista produktów<br>
+				<a href='Produkty_dodaj.php' class="btn">Dodaj produkt</a>
 			</h1>
-			<p>
-				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent euismod lorem ut metus tincidunt posuere. Duis lacinia dignissim vehicula. Aliquam dictum leo augue, sed ornare est eleifend non. Vestibulum ullamcorper turpis sed scelerisque luctus. Fusce interdum sollicitudin ligula, eget dictum metus ullamcorper sed. Nunc sollicitudin ex nec leo sagittis, ut commodo massa consectetur. Integer non velit tortor. Nullam laoreet feugiat sapien, ac tincidunt tellus dapibus nec. Curabitur eget neque risus. Duis blandit urna eu fermentum accumsan. Proin vehicula in ante at pretium. Nunc dignissim egestas sollicitudin. Maecenas vitae purus sed tellus rhoncus laoreet. Suspendisse potenti. Fusce viverra, velit bibendum sollicitudin pellentesque, quam quam euismod erat, vel porttitor leo augue bibendum orci. In eget fringilla mi.
-			</p>
+			<br>
+			<table>
+				<tr>
+					<td>Id</td>
+					<td>Nazwa</td>
+					<td>Opis</td>
+					<td>Kategoria</td>
+					<td>Cena</td>
+					<td>Ilość</td>
+					<td>Modyfikacje</td>
+				</tr>
+				<?php
+					for($i=0; $i<mysqli_num_rows($result); $i++)
+					{
+						$row = mysqli_fetch_assoc($result);
+						echo
+						"<tr>
+							<td>$row[Id_produktu]</td>
+							<td>$row[Nazwa]</td>
+							<td>$row[Opis]</td>
+							<td>$row[Id_kategorii]</td>
+							<td>$row[Cena]</td>
+							<td>$row[Ilosc]</td>
+							<td>
+							<form method='POST'>
+								<input type='hidden' name='id_produktu' value='$row[Id_produktu]'>
+								<button name='submit_edycja' class='btn'>Edytuj</button>
+								<button name='submit_usun' class='btn'>Usuń</button>
+							</form>
+							</td>
+						</tr>";
+					}
+				?>
+			</table>
 		</div>
 	</section>
 	<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
@@ -86,3 +128,8 @@
 	<script src="js/script.js"></script>
 </body>
 </html>
+
+
+<!--
+
+-->

@@ -134,13 +134,12 @@
                 <div class="sidenav">
                     <h1>Filtry:</h1>
                     <br>
-                    <hr>
-                    <br>
                     <h3>Szukaj:</h3>
                     <form action="" method="POST">
                         <input type="text" placeholder="czego szukasz?" name="search">
                         <button type="submit" name="submit_search"><i class="fa fa-search"></i></button>
                     </form>
+                    <br>
                     <?php
                         if(!empty($nazwa))
                         {

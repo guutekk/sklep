@@ -66,19 +66,6 @@
 				</ul>
 			</nav>
  		</div>
-		
-		<div class='list-container'>
-			<h1>
-				Witaj,
-				<?php
-					echo $_SESSION['user'];
-				?>
-				w panelu admina!
-			</h1>
-			<p>
-				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent euismod lorem ut metus tincidunt posuere. Duis lacinia dignissim vehicula. Aliquam dictum leo augue, sed ornare est eleifend non. Vestibulum ullamcorper turpis sed scelerisque luctus. Fusce interdum sollicitudin ligula, eget dictum metus ullamcorper sed. Nunc sollicitudin ex nec leo sagittis, ut commodo massa consectetur. Integer non velit tortor. Nullam laoreet feugiat sapien, ac tincidunt tellus dapibus nec. Curabitur eget neque risus. Duis blandit urna eu fermentum accumsan. Proin vehicula in ante at pretium. Nunc dignissim egestas sollicitudin. Maecenas vitae purus sed tellus rhoncus laoreet. Suspendisse potenti. Fusce viverra, velit bibendum sollicitudin pellentesque, quam quam euismod erat, vel porttitor leo augue bibendum orci. In eget fringilla mi.
-			</p>
-		</div>
 	</section>
 	<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>

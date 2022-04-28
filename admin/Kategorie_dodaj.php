@@ -1,26 +1,21 @@
 <?php
     session_start();
-    $connect=new mysqli('localhost', 'root', '', 'sklep');
+
+    if (!isset($_SESSION['user']) && !isset($_SESSION['nazwisko']) && !isset($_SESSION['email']) && !isset($_SESSION['haslo']) && !isset($_SESSION['telefon']) || !$_SESSION['type']==1) {
+		header('Location: ../index.php');
+	}
+	$connect=new mysqli('localhost', 'root', '', 'sklep');
 	$sql = "SELECT * FROM categories";
 	$result = mysqli_query($connect, $sql);
 
-    if (!isset($_SESSION['user']) && !isset($_SESSION['nazwisko']) && !isset($_SESSION['email']) && !isset($_SESSION['haslo']) && !isset($_SESSION['telefon'])) {
-		header('Location: ../index.php');
-	}else{
-        if(!$_SESSION['type']==1)
-		{
-			header('Location: ../index.php'); 
-		}else{
+	if(isset($_POST['submit'])){
+		$nazwa = $_POST['nazwa'];
+		$zdjecie = $_POST['zdjecie'];
 
-
-            if(isset($_POST['submit'])){
-                $nazwa = $_POST['nazwa'];
-                $zdjecie = $_POST['zdjecie'];
-
-                $query="INSERT INTO categories(Nazwa, Zdjecie) VALUES ('$nazwa', 'images/$zdjecie')";
-                $connect->query($query);
-				header('Location: Panel.php');
-            }
+		$sql="INSERT INTO categories(Nazwa, Zdjecie) VALUES ('$nazwa', 'images/$zdjecie')";
+		mysqli_query($connect, $sql);
+		header('Location: Kategorie.php');
+    }
  ?>
 <!DOCTYPE html>
 <html lang="pl">
@@ -68,13 +63,6 @@
         <div class="form-container">
 			<form action="" method="POST">
 			<h3>Dodawanie kategorii</h3>
-            <?php 
-                if(isset($error)){
-                    foreach($error as $error){
-                        echo '<span class="error">'.$error.'</span>';
-                    };
-                };
-            ?>
             <input type="text" name="nazwa" required placeholder="Nazwa kategorii">
     		<input type="file" name="zdjecie" style="border: 2px solid black">
 			<input type="submit" name="submit" value="Dodaj produkt" class="form-btn">
@@ -88,7 +76,3 @@
 	<script src="js/script.js"></script>
 </body>
 </html>
-<?php
-    }
-}
-?>

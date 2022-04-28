@@ -127,8 +127,6 @@
                 <div class="sidenav">
                     <h1>Filtry:</h1>
                     <br>
-                    <hr>
-                    <br>
                     <h3>Szukaj:</h3>
                     <form action="" method="POST">
                         <input type="text" placeholder="czego szukasz?" name="search">
