@@ -7,6 +7,12 @@
 	$connect=new mysqli('localhost', 'root', '', 'sklep');
 	$sql = "SELECT * FROM accounts";
 	$result = mysqli_query($connect, $sql);
+	
+	if(isset($_POST['submit_edycja']))
+	{
+		$id_klienta = $_POST['id_klienta'];
+		header("Location: Uzytkownicy_edytuj.php?id=$id_klienta");
+	}
 ?>
 <!DOCTYPE html>
 <html lang="pl">
@@ -93,9 +99,10 @@
                             <td>$row[Email]</td>
                             <td>$row[Telefon]</td>
                             <td>
-                            <button class='btn'>Edytuj</button>
-                            <br>
-                            <button class='btn'>Usuń</button>
+							<form method='POST'>
+								<input type='hidden' name='id_klienta' value='$row[Id_klienta]'>
+								<button name='submit_edycja' class='btn'>Edytuj</button>
+							</form>
                             </td>
                         </tr>";
                     }

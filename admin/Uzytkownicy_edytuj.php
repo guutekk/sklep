@@ -7,32 +7,20 @@
 
 	$connect=new mysqli('localhost', 'root', '', 'sklep');
 
-	$id_produktu = $_GET['id'];
-	$sql = "SELECT * FROM products WHERE Id_produktu = $id_produktu";
+	$id_klienta = $_GET['id'];
+	$sql = "SELECT * FROM accounts WHERE Id_klienta = $id_klienta";
 	$result = mysqli_query($connect, $sql);
 	$row = mysqli_fetch_assoc($result);
 
-	$opis = trim($row['Opis'], '\t');
-	
-	$id_kategorii = $row['Id_kategorii'];
-
-	$sql1 = "SELECT * FROM categories WHERE Id_kategorii=$id_kategorii";
-	$result1 = mysqli_query($connect, $sql1);
-
-	$sql2 = "SELECT * FROM categories WHERE Id_kategorii!=$id_kategorii";
-	$result2 = mysqli_query($connect, $sql2);
-
 	if(isset($_POST['submit'])){
-		$nazwa = $_POST['nazwa'];
-		$opis = $_POST['opis'];
-		$kategoria = $_POST['kategoria'];
-		$cena = $_POST['cena'];
-		$ilosc = $_POST['ilosc'];
-		$zdjecie = $_POST['zdjecie'];
+		$imie = $_POST['imie'];
+		$nazwisko = $_POST['nazwisko'];
+		$email = $_POST['email'];
+		$telefon = $_POST['telefon'];
 
-		$sql="UPDATE products SET Nazwa='$nazwa', Opis='$opis',Id_kategorii = '$kategoria',Cena='$cena',Ilosc='$ilosc' WHERE Id_produktu = $id_produktu";
+		$sql="UPDATE accounts SET Imie='$imie', Nazwisko='$nazwisko', Email='$email', Telefon='$telefon'WHERE Id_klienta = $id_klienta";
 		mysqli_query($connect, $sql);
-		header('Location: Produkty.php');
+		header('Location: Uzytkownicy.php');
 	}
  ?>
 <!DOCTYPE html>
@@ -80,37 +68,17 @@
 
         <div class="form-container">
 			<form action="" method="POST">
-				<h3>Edytowanie produktu</h3>
+				<h3>Edytowanie <?php echo $row['Imie']?></h3>
 				<?php
 				echo<<<html
-					<input type='text' name='nazwa' value='$row[Nazwa]'>
-					<textarea name='opis'>$opis</textarea>
-					<select name='kategoria'>
-				html;
-				for($i=0; $i<mysqli_num_rows($result1); $i++)
-				{
-					$row1 = mysqli_fetch_assoc($result1);
-					echo<<<html
-						<option value="$row1[Id_kategorii]">$row1[Nazwa]</option>
-					html;
-				}
-
-				for($i=0; $i<mysqli_num_rows($result2); $i++)
-				{
-					$row1 = mysqli_fetch_assoc($result2);
-					echo<<<html
-						<option value="$row1[Id_kategorii]">$row1[Nazwa]</option>
-					html;
-				}
-
-				echo<<<html
-					</select>
-					<input type='number' name = 'cena' value='$row[Cena]'>
-					<input type='number' name='ilosc' value='$row[Ilosc]'>
+					<input type='text' name='imie' value='$row[Imie]'>
+					<input type='text' name='nazwisko' value='$row[Nazwisko]'>
+					<input type='text' name = 'email' value='$row[Email]'>
+					<input type='number' name='telefon' value='$row[Telefon]'>
 					html;
 				?>
-				<input type="file" multiple name="zdjecie" style="border: 2px solid black">
-				<input type="submit" name="submit" value="Edytuj produkt" class="form-btn">
+				<input type="submit" name="submit_reset" value="Resetuj hasło" class="form-btn">
+				<input type="submit" name="submit" value="Edytuj użytkownika" class="form-btn">
 			</form>
 		</div>
 
