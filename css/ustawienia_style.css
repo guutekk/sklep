@@ -162,3 +162,8 @@ section{
 hr{
     margin: 20px 110px 80px 110px;
 }
+
+.navigaton-panel nav{
+    flex: 1;
+    text-align: center;
+  }

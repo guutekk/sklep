@@ -21,7 +21,7 @@
 		$sql="INSERT INTO `accounts_address`(`Id_klienta`, `Ulica`, `Nr_budynku`, `Kod_pocztowy`, `Miasto`, `Id_wojewodztwa`) 
         VALUES ('$id_klienta','$ulica','$nr_budynku','$kod_pocztowy','$miasto','$wojewodztwo')";
 		mysqli_query($connect, $sql);
-		header('Location: Ustawienia.php');
+		header('Location: Ustawienia_adres.php');
 	}
  ?>
 <!DOCTYPE html>
@@ -114,7 +114,7 @@
                                 <td colspan="2">
                                     <button name="submit" class="btn">Dodaj adres</button><br>
                                     </form>
-                                    <a href="Ustawienia.php" class="btn">Powrót</a>
+                                    <a href="Ustawienia_adres.php" class="btn">Powrót</a>
                                 </td>
                             </tr>
                         </tbody>

@@ -67,7 +67,7 @@
                     <li><a href="Panel.php"><ion-icon name="home-outline"></ion-icon> Home</a></li>
 					<li><a href="Produkty.php"><ion-icon name="reader-outline"></ion-icon> Produkty</a></li>
 					<li><a href="Kategorie.php"><ion-icon name="reader-outline"></ion-icon> Kategorie</a></li>
-					<li><a href="Uzytkownicy.php"><ion-icon name="reader-outline"></ion-icon> Uzytkownicy</a></li>
+					<li><a href="Uzytkownicy.php"><ion-icon name="reader-outline"></ion-icon> Użytkownicy</a></li>
 					<li><a href="Zamowienia.php"><ion-icon name="reader-outline"></ion-icon> Zamowienia</a></li>
 				</ul>
 			</nav>
@@ -102,6 +102,7 @@
 							<form method='POST'>
 								<input type='hidden' name='id_klienta' value='$row[Id_klienta]'>
 								<button name='submit_edycja' class='btn'>Edytuj</button>
+								<button name='submit_edycja_adres' class='btn'>Edytuj adres</button>
 							</form>
                             </td>
                         </tr>";

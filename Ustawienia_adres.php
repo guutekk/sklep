@@ -3,6 +3,18 @@
 	if (!isset($_SESSION['user'])) {
 		header('Location: index.php');
 	}
+
+	$connect=new mysqli('localhost', 'root', '', 'sklep');
+	$id_klienta = $_SESSION['id'];
+
+	$sql = "SELECT * FROM accounts_address JOIN provinces USING(Id_wojewodztwa) WHERE Id_klienta = $id_klienta";
+	$result = mysqli_query($connect, $sql);
+	$row = mysqli_fetch_assoc($result);
+
+	if(mysqli_num_rows($result)<1)
+	{
+		$error = "Dodaj adres zamieszkania!";
+	}
 ?>
 <!DOCTYPE html>
 <html lang="pl">
@@ -54,7 +66,6 @@
 				</ul>
 			</nav>
 		</div>
-		
         <section>
 		<div class="navigaton-panel">
 			<nav>
@@ -73,34 +84,54 @@
                 <br>
                     <table>
                         <tr>
-                            <td>Email</td>
-                            <td>
-                                <b>
-                                    <?php echo $_SESSION['email'];?>
-                                </b>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Imię i nazwisko</td>
-                            <td>
-                                <b>
-                                    <?php echo $_SESSION['user']." ".$_SESSION['nazwisko'];?>
-                                </b>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Telefon</td>
-                            <td>
-                                <b>
-                                    <?php echo $_SESSION['telefon'] ?>
-                                </b>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                                <a href="Ustawienia_dane.php" class="btn">Edytuj dane</a><br>
-                            </td>
-                        </tr>
+							<?php
+								if(isset($error))
+								{
+									echo"
+									<td>
+										<a href='Ustawienia_dodaj_zamieszkanie.php' class='btn'>Dodaj dane adresowe</a><br>							
+									</td>
+									</tr>";
+								}else{
+								echo<<<html
+									<tr>
+										<td>Ulica</td>
+										<td>
+											<b>$row[Ulica]</b>
+										</td>
+									</tr>
+									<tr>
+										<td>Nr. budynku</td>
+										<td>
+											<b>$row[Nr_budynku]</b>
+										</td>
+									</tr>
+									<tr>
+										<td>Kod pocztowy</td>
+										<td>
+											<b>$row[Kod_pocztowy]</b>
+										</td>
+									</tr>
+									<tr>
+										<td>Miasto</td>
+										<td>
+											<b>$row[Miasto]</b>
+										</td>
+									</tr>
+									<tr>
+										<td>Wojewodztwo</td>
+										<td>
+											<b>$row[Nazwa]</b>
+										</td>
+									</tr>
+									<tr>
+										<td colspan="2">
+											<a href="Ustawienia_edytuj_zamieszkanie.php" class="btn">Edytuj dane</a><br>
+										</td>
+									</tr>
+									html;
+								}
+							?>
                     </table>
             </div>
         </section>

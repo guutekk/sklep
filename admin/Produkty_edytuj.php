@@ -18,6 +18,7 @@
 
 	$sql1 = "SELECT * FROM categories WHERE Id_kategorii=$id_kategorii";
 	$result1 = mysqli_query($connect, $sql1);
+	$row1 = mysqli_fetch_assoc($result1);
 
 	$sql2 = "SELECT * FROM categories WHERE Id_kategorii!=$id_kategorii";
 	$result2 = mysqli_query($connect, $sql2);
@@ -87,13 +88,7 @@
 					<textarea name='opis'>$opis</textarea>
 					<select name='kategoria'>
 				html;
-				for($i=0; $i<mysqli_num_rows($result1); $i++)
-				{
-					$row1 = mysqli_fetch_assoc($result1);
-					echo<<<html
-						<option value="$row1[Id_kategorii]">$row1[Nazwa]</option>
-					html;
-				}
+					echo"<option value='$row1[Id_kategorii]'>$row1[Nazwa]</option>":
 
 				for($i=0; $i<mysqli_num_rows($result2); $i++)
 				{
