@@ -92,11 +92,12 @@ nav ul {
 }
 
 section{
-    padding: 1rem 20%;
+    padding: 3rem 20%;
 }
 
 .settings-container{
     padding: 20vh;
+    padding-top: 10vh;
 }
 
 .settings-container h1{

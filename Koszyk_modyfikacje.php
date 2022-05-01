@@ -1,8 +1,11 @@
 <?php
     session_start();
     $connect=new mysqli('localhost', 'root', '', 'sklep');
-    $id_klienta = $_SESSION['id'];
     $id_produktu =$_GET['id_produktu'];
+    if(!isset($_SESSION['id'])){
+        header("Location: Logowanie.php");
+    }
+    $id_klienta = $_SESSION['id'];
     
     $sql1 = "SELECT * FROM carts WHERE Id_produktu = $id_produktu AND Id_klienta = $id_klienta";
     $result = mysqli_query($connect, $sql1);

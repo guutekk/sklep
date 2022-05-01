@@ -57,13 +57,13 @@
 		
         <section>
 		<div class="navigaton-panel">
-			<nav>
-				<ul>
-                    <li><a href="Ustawienia.php"><ion-icon name="reader-outline"></ion-icon> Dane konta</a></li>
-					<li><a href="Ustawienia_adres.php"><ion-icon name="reader-outline"></ion-icon> Dane Adresowe</a></li>
-				</ul>
-			</nav>
- 		</div>
+				<nav>
+					<ul>
+						<li><a href="Ustawienia.php"><ion-icon name="reader-outline"></ion-icon> Dane konta</a></li>
+						<li><a href="Ustawienia_adres.php"><ion-icon name="reader-outline"></ion-icon> Dane Adresowe</a></li>
+					</ul>
+				</nav>
+			</div>
             <div class="settings-container">
                 <h1>Moje dane 
                     <a href="Ustawienia_dane.php">

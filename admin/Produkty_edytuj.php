@@ -88,7 +88,7 @@
 					<textarea name='opis'>$opis</textarea>
 					<select name='kategoria'>
 				html;
-					echo"<option value='$row1[Id_kategorii]'>$row1[Nazwa]</option>":
+					echo"<option value='$row1[Id_kategorii]'>$row1[Nazwa]</option>";
 
 				for($i=0; $i<mysqli_num_rows($result2); $i++)
 				{
