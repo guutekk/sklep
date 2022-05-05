@@ -67,6 +67,8 @@
             <input type="text" name="nazwa" required placeholder="Nazwa kategorii">
     		<input type="file" name="zdjecie" style="border: 2px solid black">
 			<input type="submit" name="submit" value="Dodaj produkt" class="form-btn">
+			<br>
+			<a href="Kategorie.php" class="btn">Powrót</a>
 			</form>
 		</div>
 

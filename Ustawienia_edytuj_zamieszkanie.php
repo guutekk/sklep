@@ -134,7 +134,7 @@
                                 <td colspan="2">
                                     <button name="submit" class="btn">Edytuj adres</button><br>
                                     </form>
-                                    <a href="Ustawienia.php" class="btn">Powrót</a>
+                                    <a href="Ustawienia_adres.php" class="btn">Powrót</a>
                                 </td>
                             </tr>
                         </tbody>

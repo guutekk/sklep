@@ -34,6 +34,14 @@ session_start();
         }
     }
 
+    if(isset($_POST['submit']))
+    {
+        $id_produktu = $_POST['id_produktu'];
+        $sql="DELETE FROM carts WHERE Id_produktu=$id_produktu AND Id_klienta = $id_klienta";
+        mysqli_query($connect, $sql);
+        header('Location: Koszyk.php');
+    }
+
     if(isset($_POST['zwieksz']))
     {
         $id_produktu = $_POST['id_produktu'];
@@ -177,7 +185,10 @@ session_start();
                                     </td>
                                     <td>
                                         <td>
-                                            <a class='btn' href='Koszyk_modyfikacje.php?mode=usun&id_produktu=$row[Id_produktu]'>Usuń z koszyka</a>
+                                            <form method='POST'>
+                                                <input type='hidden' name='id_produktu' value='$row[Id_produktu]'>
+                                                <button class='btn' name='submit'>Usuń z koszyka</button>
+                                            </form>
                                         </td>
                                     </td>
                                 </tr>

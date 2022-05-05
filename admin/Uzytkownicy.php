@@ -102,7 +102,7 @@
 							<form method='POST'>
 								<input type='hidden' name='id_klienta' value='$row[Id_klienta]'>
 								<button name='submit_edycja' class='btn'>Edytuj</button>
-								<button name='submit_edycja_adres' class='btn'>Edytuj adres</button>
+								<button name='submit_edycja_adres' class='btn'>Sprawdź</button>
 							</form>
                             </td>
                         </tr>";

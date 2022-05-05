@@ -71,6 +71,8 @@
 			?>
     		<input type="file" name="zdjecie" style="border: 2px solid black">
 			<input type="submit" name="submit" value="Edytuj produkt" class="form-btn">
+			<br>
+			<a href="Kategorie.php" class="btn">Powrót</a>
 			</form>
 		</div>
 

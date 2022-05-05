@@ -106,6 +106,8 @@
 				?>
 				<input type="file" multiple name="zdjecie" style="border: 2px solid black">
 				<input type="submit" name="submit" value="Edytuj produkt" class="form-btn">
+				<br>
+				<a href="Produkty.php" class="btn">Powrót</a>
 			</form>
 		</div>
 

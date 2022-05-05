@@ -76,7 +76,7 @@
 					<li><a href="Produkty.php"><ion-icon name="reader-outline"></ion-icon> Produkty</a></li>
 					<li><a href="Kategorie.php"><ion-icon name="reader-outline"></ion-icon> Kategorie</a></li>
 					<li><a href="Uzytkownicy.php"><ion-icon name="reader-outline"></ion-icon> Uzytkownicy</a></li>
-					<li><a href="Zamowienia.php"><ion-icon name="reader-outline"></ion-icon> Zamowienia</a></li>
+					<li><a href="Zamowienia.php"><ion-icon name="reader-outline"></ion-icon> Zamówienia</a></li>
 				</ul>
 			</nav>
  		</div>

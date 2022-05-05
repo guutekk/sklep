@@ -17,7 +17,7 @@
 		$ilosc = $_POST['ilosc'];
 		$zdjecie = $_POST['zdjecie'];
 
-		$sql="INSERT INTO products(Nazwa, Opis, Id_kategorii, Cena, Ilosc) VALUES ('$nazwa',' $opis','$kategoria','$cena','$ilosc')";
+		$sql="INSERT INTO products(Nazwa, Opis, Id_kategorii, Cena, Ilosc) VALUES ('$nazwa','$opis','$kategoria','$cena','$ilosc')";
 		mysqli_query($connect, $sql);
 		header('Location: Produkty.php');
 	}
@@ -85,6 +85,8 @@
 				<input type="number" name="ilosc" required placeholder="Ilość">
 				<input type="file" multiple name="zdjecie" style="border: 2px solid black">
 				<input type="submit" name="submit" value="Dodaj produkt" class="form-btn">
+				<br>
+				<a href="Produkty.php" class="btn">Powrót</a>
 			</form>
 		</div>
 

@@ -79,6 +79,8 @@
 				?>
 				<input type="submit" name="submit_reset" value="Resetuj hasło" class="form-btn">
 				<input type="submit" name="submit" value="Edytuj użytkownika" class="form-btn">
+				<br>
+				<a href="Uzytkownicy.php" class="btn">Powrót</a>
 			</form>
 		</div>
 
