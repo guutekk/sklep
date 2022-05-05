@@ -21,13 +21,6 @@
 
     if(ISSET($_GET['mode']))
     {
-        if($_GET['mode']=='usun')
-        {
-            $sql="DELETE FROM carts WHERE Id_produktu=$id_produktu AND Id_klienta = $id_klienta";
-            mysqli_query($connect, $sql);
-            header('Location: Koszyk.php');
-        }
-
         if($_GET['mode']=='dodaj')
         {
             if(mysqli_num_rows($result)>0)
