@@ -8,12 +8,12 @@ session_start();
     }
 
     $id_klienta = $_SESSION['id'];
-    $sql = "SELECT c.Ilosc, c.Id_klienta,c.Id_produktu, p.Nazwa, p.Cena FROM carts c JOIN products p USING(Id_produktu) WHERE c.Id_klienta = $id_klienta";
+    $sql = "SELECT c.Ilosc, c.Id_klienta,c.Id_produktu, p.Nazwa, p.Cena FROM carts c JOIN products p USING(Id_produktu) WHERE c.Id_klienta = $id_klienta AND c.Status = 0";
     $result = mysqli_query($connect, $sql);    
 
     if(mysqli_num_rows($result)>0){
     }else{
-        $error[]= "Koszyk jest pusty! Nic nie znajduje się obecnie w koszyku";
+        $error[]= "Koszyk jest pusty! Nic nie znajduje się obecnie w koszyku.";
     }
 
     if(isset($_POST['zmniejsz']))
@@ -109,7 +109,7 @@ session_start();
                         echo<<<html
                             <li><a><ion-icon name="person"></ion-icon> KONTO</a>
                                 <ul>
-                                    <li><a href="#"><ion-icon name="cart-outline"></ion-icon> ZAMÓWIENIA</a></li>
+                                    <li><a href="Zamowienia.php"><ion-icon name="cart-outline"></ion-icon> ZAMÓWIENIA</a></li>
                                     <li><a href="Ustawienia.php"><ion-icon name="settings-outline"></ion-icon> USTAWIENIA</a></li>
                                     <li><a href="wyloguj.php"><ion-icon name="log-out-outline"></ion-icon> WYLOGUJ SIĘ</a></li>
                                 </ul>

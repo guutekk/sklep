@@ -102,7 +102,7 @@ if(!isset($_SESSION['user']) && !isset($_SESSION['nazwisko']) && !isset($_SESSIO
 							echo<<<html
 								<li><a><ion-icon name="person"></ion-icon> KONTO</a>
 									<ul>
-										<li><a href="#"><ion-icon name="cart-outline"></ion-icon> ZAMÓWIENIA</a></li>
+										<li><a href="Zamowienia.php"><ion-icon name="cart-outline"></ion-icon> ZAMÓWIENIA</a></li>
 										<li><a href="Ustawienia.php"><ion-icon name="settings-outline"></ion-icon> USTAWIENIA</a></li>
 										<li><a href="wyloguj.php"><ion-icon name="log-out-outline"></ion-icon> WYLOGUJ SIĘ</a></li>
 									</ul>
