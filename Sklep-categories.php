@@ -154,10 +154,10 @@
                         <input class="checkbox" type="checkbox" name="sortowanie" id="1" value="1" onclick="getSelectItemThat(this.id)">    
                         <label>Rosnąca</label><br>
 
-                        <input class="checkbox" type="checkbox" name="sortowanie" id="2" value="2" onclick="getSelectItemThat_sort_price(this.id)">
+                        <input class="checkbox" type="checkbox" name="sortowanie" id="2" value="2" onclick="getSelectItemThat(this.id)">
                         <label>Malejąco</label><br>
 
-                        <input class="checkbox" type="checkbox" name="sortowanie" id="3" value="3" onclick="getSelectItemThat_sort_price(this.id)">
+                        <input class="checkbox" type="checkbox" name="sortowanie" id="3" value="3" onclick="getSelectItemThat(this.id)">
                         <label>Losowo</label><br>
                         <input type="submit" name="submit_sortowanie_cena" class="menu-btn" value="Zastosuj">
                     </form>
@@ -167,13 +167,13 @@
 
                     <h3>Sortuj (Nazwa):</h3>
                     <form class="form-sort" method="POST" action="">
-                        <input class="checkbox" type="checkbox" name="sortowanie" id="4" value="1" onclick="getSelectItemThat_sort_name(this.id)">
+                        <input class="checkbox" type="checkbox" name="sortowanie" id="4" value="1" onclick="getSelectItemThat(this.id)">
                         <label>Od A do Z</label><br>
 
-                        <input class="checkbox" type="checkbox" name="sortowanie" id="5" value="2" onclick="getSelectItemThat_sort_name(this.id)">
+                        <input class="checkbox" type="checkbox" name="sortowanie" id="5" value="2" onclick="getSelectItemThat(this.id)">
                         <label>Od Z do A</label><br>
 
-                        <input class="checkbox" type="checkbox" name="sortowanie" id="6" value="3" onclick="getSelectItemThat_sort_name(this.id)">
+                        <input class="checkbox" type="checkbox" name="sortowanie" id="6" value="3" onclick="getSelectItemThat(this.id)">
                         <label>Losowo</label><br>
                         <input type="submit" name="submit_sortowanie_nazwa" class="menu-btn" value="Zastosuj">
                     </form>
@@ -196,7 +196,9 @@
                         </div>
                         <div class="Item__price">$row[Cena]zł</div>
                     </a>
-                    <a href='Koszyk_modyfikacje.php?mode=dodaj&id_produktu=$row[Id_produktu]' class="btn">Dodaj do koszyka</a>
+                    <form method='POST' action='Koszyk_modyfikacje.php?mode=dodaj&id_produktu=$row[Id_produktu]'>
+                        <button name='submit' class='btn'>Dodaj do koszyka</button>
+                    </form> 
                     </div>
                     html;
                 }

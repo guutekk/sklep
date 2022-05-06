@@ -11,6 +11,12 @@
 
     $sql1 = "SELECT * FROM products WHERE Id_kategorii = $kategoria AND Id_produktu!=$_GET[id] ORDER BY RAND() LIMIT 3;";
     $result1 = mysqli_query($connect, $sql1);
+
+    if(isset($_POST['submit']))
+    {
+        $ilosc = $_POST['ilosc'];
+        header("Location: Koszyk_modyfikacje.php?mode=dodaj&id_produktu=$row[Id_produktu]&ilosc=$ilosc");
+    }
 ?>
 
 <!DOCTYPE html>
@@ -116,11 +122,11 @@
                     <?php echo"$row[Nazwa]"?>
                 </h2>
                 <div class = "product-price">
-                    <p class = "new-price">Cena: 
+                    <h2 class = "new-price">Cena: 
                         <span>
                             <?php echo"$row[Cena]"?>zł
                         </span>
-                    </p>
+                    </h2>
                 </div>
 
                 <div class = "product-detail">
@@ -131,8 +137,10 @@
                 <div class = "purchase-info">
                     <?php
                         echo<<<html
-                            <input type = "number" min = "1" max = "$ilosc" value = "1">
-                            <a class='btn' href='Koszyk_modyfikacje.php?mode=dodaj&id_produktu=$row[Id_produktu]'>Dodaj do koszyka</a>
+                            <form method='POST'>
+                                <input type = "number" name='ilosc' min = "1" max = "$ilosc" value='1'>
+                                <button name='submit' class='btn'>Dodaj do koszyka</button>
+                            </form>    
                         html;
                     ?>
                 </div>

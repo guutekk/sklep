@@ -2,6 +2,7 @@
     session_start();
     $connect=new mysqli('localhost', 'root', '', 'sklep');
     $id_produktu =$_GET['id_produktu'];
+    $ilosc_get = $_GET['ilosc'];
     if(!isset($_SESSION['id'])){
         header("Location: Logowanie.php");
     }
@@ -17,25 +18,32 @@
     
     $ilosc_baza = $row1['Ilosc'];
 
-    $ilosc = $row['Ilosc']+1;
+    $ilosc = $row['Ilosc']+$ilosc_get;
 
-    if(ISSET($_GET['mode']))
+    if($_GET['mode']=='dodaj')
     {
-        if($_GET['mode']=='dodaj')
+        if(mysqli_num_rows($result)>0)
         {
-            if(mysqli_num_rows($result)>0)
+            if($ilosc<=$ilosc_baza)
             {
-                if($ilosc<=$ilosc_baza)
-                {
-                    $sql = "UPDATE carts SET Ilosc='$ilosc' WHERE Id_produktu=$id_produktu AND Id_klienta = $id_klienta";
-                    mysqli_query($connect, $sql);
-                }
-            }else
+                $sql = "UPDATE carts SET Ilosc='$ilosc' WHERE Id_produktu=$id_produktu AND Id_klienta = $id_klienta";
+                mysqli_query($connect, $sql);
+            }else if($ilosc>$ilosc_baza)
             {
+                $sql = "UPDATE carts SET Ilosc='$ilosc_baza' WHERE Id_produktu=$id_produktu AND Id_klienta = $id_klienta";
+                mysqli_query($connect, $sql);
+            }
+        }else
+        {
+            if($ilosc_get>1)
+            {
+                $sql = "INSERT INTO carts(Id_produktu, Ilosc, Id_klienta) VALUES ('$id_produktu','$ilosc_get','$id_klienta')";
+                mysqli_query($connect, $sql);
+            }else{
                 $sql = "INSERT INTO carts(Id_produktu, Ilosc, Id_klienta) VALUES ('$id_produktu','1','$id_klienta')";
                 mysqli_query($connect, $sql);
             }
-            header("Location: Koszyk.php");
         }
+        header("Location: Koszyk.php");
     }
 ?>

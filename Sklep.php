@@ -196,7 +196,9 @@
                         </div>
                         <div class="Item__price">$row[Cena]zł</div>
                     </a>
-                    <a href='Koszyk_modyfikacje.php?mode=dodaj&id_produktu=$row[Id_produktu]' class="btn">Dodaj do koszyka</a>
+                    <form method='POST' action='Koszyk_modyfikacje.php?mode=dodaj&id_produktu=$row[Id_produktu]'>
+                        <button name='submit' class='btn'>Dodaj do koszyka</button>
+                    </form>    
                     </div>
                     html;
                 }
