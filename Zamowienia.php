@@ -97,20 +97,9 @@ session_start();
                             ";
                         }
                     }else{
-                        $cena_suma=0;
                         for($i=0; $i<mysqli_num_rows($result); $i++)
                         {
                             $row = mysqli_fetch_assoc($result);
-
-                            $ilosc = $row['Ilosc'];
-                            $cena = $row['Cena'];
-
-                            if($ilosc>1)
-                            {
-                                $cena*=$ilosc;
-                            }
-
-                            $cena_suma+=$cena;
                             echo"
                                 <tr> 
                                     <td>
