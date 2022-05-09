@@ -3,25 +3,19 @@
 
     $connect=new mysqli('localhost', 'root', '', 'sklep');
 
-    $nazwa = $_GET['name'];
-
-    $sql="SELECT * FROM products WHERE Nazwa LIKE '$nazwa%'";
+    $sql = "SELECT * FROM products WHERE Id_kategorii = $_GET[id]";
     $result = mysqli_query($connect, $sql);
-
-    if(!mysqli_num_rows($result)>0)
-    {
-        $error[]= "Brak wyszukań dla: $nazwa";
-    }
 
     $sql1 = "SELECT * FROM categories";
     $result1 =mysqli_query($connect, $sql1);
+
 
     if(isset($_POST['submit_search']))
     {
         $nazwa = $_POST['search'];
         if(!empty($nazwa))
         {
-            header("Location: Sklep-search.php?name=$nazwa");
+            header("Location: Sklep_szukaj.php?name=$nazwa");
         }
     }
 
@@ -31,18 +25,18 @@
 
         if($value=='1')
         {
-            $sql="SELECT * FROM products WHERE Nazwa LIKE '$nazwa%' ORDER BY Cena ASC";
+            $sql="SELECT * FROM products WHERE Id_kategorii = $_GET[id] ORDER BY Cena ASC";
             $result = mysqli_query($connect, $sql);
         }
         else if($value=='2')
         {
-            $sql="SELECT * FROM products WHERE Nazwa LIKE '$nazwa%' ORDER BY Cena DESC;";
+            $sql="SELECT * FROM products WHERE Id_kategorii = $_GET[id] ORDER BY Cena DESC;";
             $result = mysqli_query($connect, $sql);
         }
         else if($value=='3')
         {
-            $sql = "SELECT * FROM products WHERE Nazwa LIKE '$nazwa%'";
-            $result = mysqli_query($connect, $sql);
+            $sql = "SELECT * FROM products WHERE Id_kategorii = $_GET[id]";
+        $result = mysqli_query($connect, $sql);
         }
     }
 
@@ -52,21 +46,20 @@
 
         if($value=='1')
         {
-            $sql="SELECT * FROM products WHERE Nazwa LIKE '$nazwa%' ORDER BY Nazwa ASC";
+            $sql="SELECT * FROM products WHERE Id_kategorii = $_GET[id] ORDER BY Nazwa ASC";
             $result = mysqli_query($connect, $sql);
         }
         else if($value=='2')
         {
-            $sql="SELECT * FROM products WHERE Nazwa LIKE '$nazwa%' ORDER BY Nazwa DESC";
+            $sql="SELECT * FROM products WHERE Id_kategorii = $_GET[id] ORDER BY Nazwa DESC";
             $result = mysqli_query($connect, $sql);
         }
         else if($value=='3')
         {
-            $sql = "SELECT * FROM products WHERE Nazwa LIKE '$nazwa%'";
+            $sql = "SELECT * FROM products WHERE Id_kategorii = $_GET[id]";
         $result = mysqli_query($connect, $sql);
         }
     }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -140,14 +133,6 @@
                         <button type="submit" name="submit_search"><i class="fa fa-search"></i></button>
                     </form>
                     <br>
-                    <?php
-                        if(!empty($nazwa))
-                        {
-                            echo"<h4>Wyszukiwania dla: ".$nazwa."</h4>";
-                        }
-                     ?>
-
-                    <br>
                     <hr>
                     <br>
                     <h3>Kategorie:</h3>
@@ -156,7 +141,7 @@
                         for($i=0; $i<mysqli_num_rows($result1); $i++)
                         {
                             $row = mysqli_fetch_assoc($result1);
-                            echo"<a href='Sklep-categories.php?id=$row[Id_kategorii]'>$row[Nazwa]</a>";
+                            echo"<a href='Sklep_kategoria.php?id=$row[Id_kategorii]'>$row[Nazwa]</a>";
                         }
                     ?>
 
@@ -166,13 +151,13 @@
 
                     <h3>Sortuj (Cena):</h3>
                     <form class="form-sort" method="POST" action="">
-                        <input class="checkbox" type="checkbox" name="sortowanie" id="1" value="1" onclick="getSelectItemThat(id)">
+                        <input class="checkbox" type="checkbox" name="sortowanie" id="1" value="1" onclick="getSelectItemThat(this.id)">    
                         <label>Rosnąca</label><br>
 
-                        <input class="checkbox" type="checkbox" name="sortowanie" id="2" value="2" onclick="getSelectItemThat(id)">
+                        <input class="checkbox" type="checkbox" name="sortowanie" id="2" value="2" onclick="getSelectItemThat(this.id)">
                         <label>Malejąco</label><br>
 
-                        <input class="checkbox" type="checkbox" name="sortowanie" id="3" value="3" onclick="getSelectItemThat(id)">
+                        <input class="checkbox" type="checkbox" name="sortowanie" id="3" value="3" onclick="getSelectItemThat(this.id)">
                         <label>Losowo</label><br>
                         <input type="submit" name="submit_sortowanie_cena" class="menu-btn" value="Zastosuj">
                     </form>
@@ -182,13 +167,13 @@
 
                     <h3>Sortuj (Nazwa):</h3>
                     <form class="form-sort" method="POST" action="">
-                        <input class="checkbox" type="checkbox" name="sortowanie" id="4" value="1" onclick="getSelectItemThat(id)">
+                        <input class="checkbox" type="checkbox" name="sortowanie" id="4" value="1" onclick="getSelectItemThat(this.id)">
                         <label>Od A do Z</label><br>
 
-                        <input class="checkbox" type="checkbox" name="sortowanie" id="5" value="2" onclick="getSelectItemThat(id)">
+                        <input class="checkbox" type="checkbox" name="sortowanie" id="5" value="2" onclick="getSelectItemThat(this.id)">
                         <label>Od Z do A</label><br>
 
-                        <input class="checkbox" type="checkbox" name="sortowanie" id="6" value="3" onclick="getSelectItemThat(id)">
+                        <input class="checkbox" type="checkbox" name="sortowanie" id="6" value="3" onclick="getSelectItemThat(this.id)">
                         <label>Losowo</label><br>
                         <input type="submit" name="submit_sortowanie_nazwa" class="menu-btn" value="Zastosuj">
                     </form>
@@ -197,14 +182,6 @@
 
         <div class="Items">
             <?php
-
-                if(isset($error))
-                {
-                    foreach($error as $error)
-                    {
-                        echo"<h1>$error</h1>";
-                    }
-                }
                 for($i=0; $i<mysqli_num_rows($result); $i++)
                 {
                     $row = mysqli_fetch_assoc($result);

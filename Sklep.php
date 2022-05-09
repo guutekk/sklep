@@ -14,7 +14,7 @@
         $nazwa = $_POST['search'];
         if(!empty($nazwa))
         {
-            header("Location: Sklep-search.php?name=$nazwa");
+            header("Location: Sklep_szukaj.php?name=$nazwa");
         }
     }
 
@@ -141,7 +141,7 @@
                         for($i=0; $i<mysqli_num_rows($result1); $i++)
                         {
                             $row = mysqli_fetch_assoc($result1);
-                            echo"<a href='Sklep-categories.php?id=$row[Id_kategorii]'>$row[Nazwa]</a>";
+                            echo"<a href='Sklep_kategoria.php?id=$row[Id_kategorii]'>$row[Nazwa]</a>";
                         }
                     ?>
 
