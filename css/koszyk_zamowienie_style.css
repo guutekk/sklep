@@ -89,7 +89,7 @@ nav ul {
 }
 
 section{
-    padding: 0,1rem 20%;
+    padding: 40px;
 }
 
 .navigaton-panel nav{
@@ -97,20 +97,25 @@ section{
     text-align: center;
   }
 
-  .container {  display: grid;
-    grid-template-columns: 1.6fr 1.4fr;
-    grid-template-rows: 1fr 1fr 1fr;
-    gap: 0px 0px;
-    grid-auto-flow: row;
-    grid-template-areas:
-      "przesylka adresdostawy"
-      ". ."
-      ". .";
-  }
-  
-.przesylka { grid-area: przesylka; }
-  
-.adresdostawy { grid-area: adresdostawy; }
+.btn{
+    margin-top: 1rem;
+    display: inline-block;
+    font-size: 20px;
+    color: #fff;
+    background: black;  
+    border-radius: 20px;
+    cursor: pointer;
+    padding: .5rem 2rem;
+    border: 3px solid black;
+    transition-duration: 0.4s;
+    margin-left: 110px;
+}
+
+.btn:hover{
+    background: white;
+    color: black;
+    border: 3px solid black;
+}
 
 hr{
     margin: 40px 110px 80px 110px;
@@ -121,4 +126,72 @@ hr{
     padding-bottom: 30px;
     text-decoration: none;
     color: black;
+}
+
+.row{
+    padding-top: 50px;
+}
+
+.settings-container table {
+    border-collapse: collapse;
+    width: 100%;
+  }  
+
+.settings-container  th, td {
+    padding: 40px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+  }
+
+.settings-container .error{
+    margin: 10px 0;
+    display: block;
+    background: crimson;
+    color: #fff;
+    border-radius: 5px;
+    font-size: 20px;
+    padding: 10px;
+}
+
+.settings-container input{
+    width: 100%;
+    padding: 10px 15px;
+    font-size: 18px;
+    margin: 1px 0;
+}
+
+.settings-container select{
+    width: 100%;
+    padding: 10px 15px;
+    font-size: 18px;
+    margin: 1px 0;
+}
+.radio{
+    font-size: 25px;
+    padding: 10px;
+}
+.radio input{
+    margin: .4rem;
+    width: 25px;
+    height: 25px;
+}
+.btn_next{
+    margin-top: 1rem;
+    display: inline-block;
+    font-size: 20px;
+    color: #fff;
+    background: black;  
+    border-radius: 20px;
+    cursor: pointer;
+    padding: .5rem 2rem;
+    border: 3px solid black;
+    transition-duration: 0.4s;
+    margin-left: 110px;
+    margin-left: 450px;
+}
+
+.btn_next:hover{
+    background: white;
+    color: black;
+    border: 3px solid black;
 }

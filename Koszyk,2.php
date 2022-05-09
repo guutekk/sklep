@@ -12,7 +12,29 @@
     if(mysqli_num_rows($result)<1){
         header("Location: Koszyk.php");
     }
+    
 
+    $sql_adres="SELECT * FROM accounts_address WHERE Id_klienta = $id_klienta";
+    $result_adres=mysqli_query($connect, $sql_adres);
+    $row_adres=mysqli_fetch_assoc($result_adres);
+
+    if(mysqli_num_rows($result_adres)<1)
+	{
+		$error = "Dodaj adres zamieszkania!";
+	}else
+    {
+        $wojewodztwo = $row_adres['Id_wojewodztwa'];
+    
+        $sql_wojewodztwo_1 = "SELECT * FROM provinces WHERE Id_wojewodztwa = $wojewodztwo";
+        $result_wojewodztwo_1 = mysqli_query($connect, $sql_wojewodztwo_1);
+        $row_wojewodztwo = mysqli_fetch_assoc($result_wojewodztwo_1);
+    
+        $sql_wojewodztwo_2 = "SELECT * FROM provinces WHERE Id_wojewodztwa != $wojewodztwo";
+        $result_wojewodztwo_2 = mysqli_query($connect, $sql_wojewodztwo_2);
+    }
+
+    $sql_dostawa ="SELECT * FROM delivery_method";
+    $result_dostawa = mysqli_query($connect, $sql_dostawa);
 ?>
 <title>Bigibongo Shop</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -75,26 +97,102 @@
         <div class="navigaton-panel">
 			<nav>
 				<ul>
-                    <li><a href="Ustawienia.php"><ion-icon name="cart-outline"></ion-icon> Koszyk</a></li>
-                    <li><a href="Ustawienia.php"><ion-icon name="cube-outline"></ion-icon> Transport</a></li>
-					<li><a href="Ustawienia_adres.php"><ion-icon name="cash-outline"></ion-icon> Płatność</a></li>
-                    <li><a href="Ustawienia_adres.php"><ion-icon name="checkmark-outline"></ion-icon> Podsumowanie</a></li>
+                    <li><a href="Koszyk.php"><ion-icon name="cart-outline"></ion-icon> Koszyk</a></li>
+                    <li><a href="Koszyk,2.php"><ion-icon name="cube-outline"></ion-icon> Transport</a></li>
+					<li><a href="Koszyk,3.php"><ion-icon name="cash-outline"></ion-icon> Płatność</a></li>
+                    <li><a href="Koszyk,4.php"><ion-icon name="checkmark-outline"></ion-icon> Podsumowanie</a></li>
 				</ul>
 			</nav>
  		</div>
          
-         <div class="container">
-             <form>
+         <form method="POST">
+            <div class="row">
+                <div class="col-sm-6">
+                    <h3>Przesyłka:</h3>
+                        <?php
 
-             </form>
-            <div class="przesylka">
-                <h1>Przesyłka: </h1>
-                
+                            for($i =0; $i<mysqli_num_rows($result_dostawa); $i++)
+                            {
+                                $row = mysqli_fetch_assoc($result_dostawa);
+                                echo "
+                                <div class='radio'>
+                                    <label>
+                                        <input type='radio' name='radio' value='$row[Id_dostawy]'x>
+                                        $row[Nazwa] | $row[Cena],00zł
+                                    </label>
+                                </div>";
+                            }
+                        ?>
+                </div>
+                <div class="col-sm-6">
+                    <h3>Dane adresowe:</h3>
+                    <table> 
+                        <tr>
+                            <?php
+								if(isset($error))
+								{
+									echo"
+									<td>
+										<a href='Ustawienia_dodaj_zamieszkanie.php' class='btn'>Dodaj dane adresowe</a><br>							
+									</td>
+									</tr>";
+								}else{
+                                    echo"
+                                        <tr>
+                                        <td>
+                                            Ulica
+                                        </td>
+                                        <td>
+                                            <input type='text' value='$row_adres[Ulica]'>
+                                        </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Nr. budynku</td>
+                                            <td>
+                                        
+                                                <input type='text' value='$row_adres[Nr_budynku]'>
+                                            
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Kod pocztowy</td>
+                                            <td>
+                                        
+                                            <input type='text' value='$row_adres[Kod_pocztowy]'>
+                                            
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Miasto</td>
+                                            <td>
+                                                <input type='text' value='$row_adres[Miasto]'>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Wojewodztwo</td>
+                                            <td>
+                                            <select name='wojewodztwo'>
+                                                        <option value='$row_wojewodztwo[Id_wojewodztwa]'>$row_wojewodztwo[Nazwa]</option>
+                                                        ";
+                                                        for($i=0; $i<mysqli_num_rows($result_wojewodztwo_2); $i++)
+                                                        {
+                                                            $row_wojewodztwo = mysqli_fetch_assoc($result_wojewodztwo_2);
+                                                            echo"<option value='$row_wojewodztwo[Id_wojewodztwa]'>$row_wojewodztwo[Nazwa]</option>";
+                                                        }
+                                                        echo"
+                                                </select>
+                                            </select>
+                                        </td>
+                                    </tr>";
+                                }
+
+                            ?>
+                    </table>
+                    
+                    <input type="submit" class="btn_next" value="Dalej">
+                </div>
             </div>
-            <div class="adresdostawy">
-                    <h1>Siema siema </h1>
-            </div>
-        </div>
+         </form>
     </section>
     <footer>
 			<hr>
