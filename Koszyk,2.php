@@ -35,6 +35,34 @@
 
     $sql_dostawa ="SELECT * FROM delivery_method";
     $result_dostawa = mysqli_query($connect, $sql_dostawa);
+
+    $sql_platnosc="SELECT * FROM payments";
+    $result_platnosc = mysqli_query($connect, $sql_platnosc);
+
+    if(isset($_POST['submit'])){
+
+        $id_platnosci = $_POST['radio_platnosc'];
+        $ulica = $_POST['ulica'];
+        $nr_budynku = $_POST['nr_budynku'];
+        $kod_pocztowy = $_POST['kod_pocztowy'];
+        $miasto = $_POST['miasto'];
+        $wojewodztwo = $_POST['wojewodztwo'];
+        $data = date("Y-m-d");
+
+        $sql_dostawa_cena = "SELECT * FROM delivery_method WHERE Id_dostawy = $id_dostawy";
+        $result_dostawa_cena = mysqli_query($connect, $sql_dostawa_cena);
+        $row_dostawa = mysqli_fetch_assoc($result_dostawa_cena);
+
+        $sql_platnosc_cena = "SELECT * FROM payments WHERE Id_platnosci = $id_platnosci";
+        $result_platnosc_cena = mysqli_query($connect, $sql_platnosc_cena);
+        $row_platnosc = mysqli_fetch_assoc($result_platnosc_cena);
+
+        $cena = $_GET['price'] + $row_dostawa['Cena'] + $row_platnosc['Cena'];
+
+        $sql_insert = "INSERT INTO orderS(Id_klienta, Id_dostawy, Id_platnosci, Data_zamowienia, Cena, Ulica, Nr_budynku, Kod_pocztowy, Miasto, Id_wojewodztwa,Id_statusu) VALUES ('$id_klienta','$id_dostawy','$id_platnosci','$data','$cena','$ulica','$nr_budynku','$kod_pocztowy','$miasto','$wojewodztwo', '0')";
+        mysqli_query($connect, $sql_insert);
+        header("Location: Koszyk,3.php");
+    }
 ?>
 <title>Bigibongo Shop</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -98,9 +126,8 @@
 			<nav>
 				<ul>
                     <li><a href="Koszyk.php"><ion-icon name="cart-outline"></ion-icon> Koszyk</a></li>
-                    <li><a href="Koszyk,2.php"><ion-icon name="cube-outline"></ion-icon> Transport</a></li>
-					<li><a href="Koszyk,3.php"><ion-icon name="cash-outline"></ion-icon> Płatność</a></li>
-                    <li><a href="Koszyk,4.php"><ion-icon name="checkmark-outline"></ion-icon> Podsumowanie</a></li>
+                    <li><a href="Koszyk,2.php"><ion-icon name="cube-outline"></ion-icon> Płatność / Dostawa</a></li>
+                    <li><a href="Koszyk,3.php"><ion-icon name="checkmark-outline"></ion-icon> Podsumowanie</a></li>
 				</ul>
 			</nav>
  		</div>
@@ -114,13 +141,52 @@
                             for($i =0; $i<mysqli_num_rows($result_dostawa); $i++)
                             {
                                 $row = mysqli_fetch_assoc($result_dostawa);
+                                if($row['Id_dostawy']==1){
+                                    echo<<<html
+                                        <div class='radio'>
+                                            <label>
+                                                <input type='radio' name='radio_dostawa' value='$row[Id_dostawy]' checked>
+                                                $row[Nazwa] | $row[Cena],00zł
+                                            </label>
+                                        </div>
+                                    html;
+                                }else{
+
                                 echo "
                                 <div class='radio'>
                                     <label>
-                                        <input type='radio' name='radio' value='$row[Id_dostawy]'x>
+                                        <input type='radio' name='radio_dostawa' value='$row[Id_dostawy]'>
                                         $row[Nazwa] | $row[Cena],00zł
                                     </label>
                                 </div>";
+                                }
+                            }
+                        ?>
+                        <br>
+                        <h3>Płatność:</h3>
+                        <?php
+                            for($i=0; $i<mysqli_num_rows($result_platnosc); $i++){
+                                $row = mysqli_fetch_assoc($result_platnosc);
+                                if($row['Id_platnosci']==1){
+                                    echo<<<html
+                                        <div class='radio'>
+                                            <label>
+                                                <input type='radio' name='radio_platnosc' value='$row[Id_platnosci]' checked>
+                                                $row[Nazwa] | $row[Cena],00zł
+                                            </label>
+                                        </div>
+                                    html;
+                                }else{
+
+                                    echo "
+                                    <div class='radio'>
+                                        <label>
+                                            <input type='radio' name='radio_platnosc' value='$row[Id_platnosci]'>
+                                            $row[Nazwa] | $row[Cena],00zł
+                                        </label>
+                                    </div>";
+                                    
+                                }
                             }
                         ?>
                 </div>
@@ -143,14 +209,14 @@
                                             Ulica
                                         </td>
                                         <td>
-                                            <input type='text' value='$row_adres[Ulica]'>
+                                            <input type='text' name='ulica' value='$row_adres[Ulica]'>
                                         </td>
                                         </tr>
                                         <tr>
                                             <td>Nr. budynku</td>
                                             <td>
                                         
-                                                <input type='text' value='$row_adres[Nr_budynku]'>
+                                                <input type='text' name='nr_budynku' value='$row_adres[Nr_budynku]'>
                                             
                                             </td>
                                         </tr>
@@ -158,14 +224,14 @@
                                             <td>Kod pocztowy</td>
                                             <td>
                                         
-                                            <input type='text' value='$row_adres[Kod_pocztowy]'>
+                                            <input type='text' name='kod_pocztowy' value='$row_adres[Kod_pocztowy]'>
                                             
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>Miasto</td>
                                             <td>
-                                                <input type='text' value='$row_adres[Miasto]'>
+                                                <input type='text' name='miasto' value='$row_adres[Miasto]'>
                                             </td>
                                         </tr>
                                         <tr>
@@ -188,8 +254,7 @@
 
                             ?>
                     </table>
-                    
-                    <input type="submit" class="btn_next" value="Dalej">
+                    <button name='submit' class="btn_next">Dalej</button>
                 </div>
             </div>
          </form>

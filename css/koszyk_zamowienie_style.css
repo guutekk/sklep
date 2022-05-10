@@ -195,3 +195,18 @@ hr{
     color: black;
     border: 3px solid black;
 }
+
+.error{
+    margin-top: 50px;
+    margin-left: 10px;
+    text-align: left;
+}
+
+.error h3{
+    color: red;
+}
+
+.delivery{
+    border-collapse: collapse;
+    text-align: center;
+}

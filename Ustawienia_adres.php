@@ -78,7 +78,7 @@
  		</div>
             <div class="settings-container">
                 <h1>Moje dane 
-                    <a href="Ustawienia_dane.php">
+                    <a href="Ustawienia_edytuj_zamieszkanie.php">
                         <ion-icon class="ikon" name="create-outline"></ion-icon>
                     </a>
                 </h1>

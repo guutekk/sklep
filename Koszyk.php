@@ -214,7 +214,7 @@ session_start();
                                 ."zł</td>
                             </tr>
                         </table>
-                        <a href='Koszyk,2.php' class='btn'>Kupuję</a>
+                        <a href='Koszyk,2.php?price=$cena_suma' class='btn'>Kupuję</a>
                     </div>
                 ";
             }
