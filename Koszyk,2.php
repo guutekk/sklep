@@ -41,6 +41,7 @@
 
     if(isset($_POST['submit'])){
 
+        $id_dostawy = $_POST['radio_dostawa'];
         $id_platnosci = $_POST['radio_platnosc'];
         $ulica = $_POST['ulica'];
         $nr_budynku = $_POST['nr_budynku'];
