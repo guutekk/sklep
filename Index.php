@@ -90,19 +90,29 @@
 						for($i=0; $i<mysqli_num_rows($result); $i++)
 						{
 							$row = mysqli_fetch_assoc($result);
-							echo<<<html
+							$sql_zdjecie = "SELECT * FROM images WHERE Id_produktu = $row[Id_produktu] LIMIT 1";
+							$result_zdjecie = mysqli_query($connect, $sql_zdjecie);
+								echo<<<html
 									<div class="swiper-slide slide">
-										<div class="content">
-											<span>Nasze nowości</span>
-											<h3>$row[Nazwa]</h3>
-											<p>$row[Opis]</p>
-											<a href="produkt.php?id=$row[Id_produktu]" class="btn">Sprawdź</a>
-										</div>
-										<div class="image">
-											<img src="$row[Id_zdjecia]">
-										</div>
+									<div class="content">
+										<span>Nasze nowości</span>
+										<h3>$row[Nazwa]</h3>
+										<p>$row[Opis]</p>
+										<a href="produkt.php?id=$row[Id_produktu]" class="btn">Sprawdź</a>
 									</div>
-							html;
+									<div class="image">
+									html;
+
+									while($row = $result_zdjecie->fetch_assoc()){
+										$imageURL = 'images/'.$row["file_name"];
+										echo<<<html
+										<img src="$imageURL" alt=""/>
+										html;
+									}
+									echo<<<html
+									</div>
+								</div>
+								html;
 						}
 					?>	
 				</div>

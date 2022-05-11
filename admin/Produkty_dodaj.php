@@ -15,11 +15,63 @@
 		$kategoria = $_POST['kategoria'];
 		$cena = $_POST['cena'];
 		$ilosc = $_POST['ilosc'];
-		$zdjecie = $_POST['zdjecie'];
 
-		$sql="INSERT INTO products(Nazwa, Opis, Id_kategorii, Cena, Ilosc) VALUES ('$nazwa','$opis','$kategoria','$cena','$ilosc')";
-		mysqli_query($connect, $sql);
-		header('Location: Produkty.php');
+		$sql_produkt="INSERT INTO products(Nazwa, Opis, Id_kategorii, Cena, Ilosc) VALUES ('$nazwa','$opis','$kategoria','$cena','$ilosc')";
+		mysqli_query($connect, $sql_produkt);
+
+
+		$targetDir = "../images/"; 
+		$allowTypes = array('jpg','png','jpeg','gif'); 
+		
+		$statusMsg = $errorMsg = $insertValuesSQL = $errorUpload = $errorUploadType = ''; 
+		$fileNames = array_filter($_FILES['files']['name']); 
+		if(!empty($fileNames)){ 
+			foreach($_FILES['files']['name'] as $key=>$val){ 
+				// File upload path 
+				$fileName = basename($_FILES['files']['name'][$key]); 
+				$targetFilePath = $targetDir . $fileName; 
+				
+				$sql_id_produktu = "SELECT * FROM products ORDER BY Id_produktu DESC";
+				$result_id_produktu = mysqli_query($connect, $sql_id_produktu);
+				$row_id_prodktu = mysqli_fetch_assoc($result_id_produktu);
+				$id_produktu = $row_id_prodktu['Id_produktu'];
+
+				// Check whether file type is valid 
+				$fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION); 
+				if(in_array($fileType, $allowTypes)){ 
+					// Upload file to server 
+					if(move_uploaded_file($_FILES["files"]["tmp_name"][$key], $targetFilePath)){ 
+						// Image db insert sql 
+						$insertValuesSQL .= "('".$fileName."', NOW(), '".$id_produktu."'),";
+					}else{ 
+						$errorUpload .= $_FILES['files']['name'][$key].' | '; 
+					} 
+				}else{ 
+					$errorUploadType .= $_FILES['files']['name'][$key].' | '; 
+				} 
+			} 
+			
+			// Error message 
+			$errorUpload = !empty($errorUpload)?'Upload Error: '.trim($errorUpload, ' | '):''; 
+			$errorUploadType = !empty($errorUploadType)?'File Type Error: '.trim($errorUploadType, ' | '):''; 
+			$errorMsg = !empty($errorUpload)?'<br/>'.$errorUpload.'<br/>'.$errorUploadType:'<br/>'.$errorUploadType; 
+
+			if(!empty($insertValuesSQL)){ 
+				$insertValuesSQL = trim($insertValuesSQL, ','); 
+				// Insert image file name into database 
+            	$insert = $connect->query("INSERT INTO images (file_name, uploaded_on, Id_produktu) VALUES $insertValuesSQL"); 
+				if($insert){ 
+					$statusMsg = "Files are uploaded successfully.".$errorMsg; 
+				}else{ 
+					$statusMsg = "Sorry, there was an error uploading your file."; 
+				} 
+			}else{ 
+				$statusMsg = "Upload failed! ".$errorMsg; 
+			} 
+		}else{ 
+			$statusMsg = 'Please select a file to upload.'; 
+		} 
+			//header('Location: Produkty.php');
 	}
  ?>
 <!DOCTYPE html>
@@ -67,7 +119,7 @@
 		</div>
 
         <div class="form-container">
-			<form action="" method="POST">
+			<form method="POST" enctype="multipart/form-data">
 				<h3>Dodawanie produktu</h3>
 				<input type="text" name="nazwa" required placeholder="Nazwa produktu">
 				<textarea name="opis" required placeholder="Opis"></textarea>
@@ -84,7 +136,7 @@
 				</select>
 				<input type="number" name = "cena" placeholder="Cena">
 				<input type="number" name="ilosc" required placeholder="Ilość">
-				<input type="file" multiple name="zdjecie" style="border: 2px solid black">
+				<input type="file" name="files[]" multiple style="border: 2px solid black">
 				<input type="submit" name="submit" value="Dodaj produkt" class="form-btn">
 				<br>
 				<a href="Produkty.php" class="btn">Powrót</a>
