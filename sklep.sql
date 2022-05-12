@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 11 Maj 2022, 11:01
+-- Czas generowania: 12 Maj 2022, 13:27
 -- Wersja serwera: 10.4.24-MariaDB
 -- Wersja PHP: 7.3.16
 
@@ -94,7 +94,10 @@ INSERT INTO `carts` (`Id_koszyka`, `Id_produktu`, `Ilosc`, `Id_klienta`, `Status
 (2, 1, 1, 1, 0),
 (3, 3, 1, 1, 0),
 (4, 4, 1, 1, 0),
-(5, 5, 1, 1, 0);
+(5, 5, 1, 1, 0),
+(6, 25, 5, 1, 0),
+(7, 26, 2, 1, 0),
+(8, 27, 1, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -146,10 +149,23 @@ INSERT INTO `delivery_method` (`Id_dostawy`, `Nazwa`, `Cena`) VALUES
 --
 
 CREATE TABLE `images` (
-  `Id_zdjecia` int(11) NOT NULL,
-  `Sciezka` text COLLATE utf8mb4_polish_ci NOT NULL,
+  `id` int(11) NOT NULL,
+  `file_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `uploaded_on` datetime NOT NULL,
+  `status` enum('1','0') COLLATE utf8_unicode_ci NOT NULL DEFAULT '1',
   `Id_produktu` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Zrzut danych tabeli `images`
+--
+
+INSERT INTO `images` (`id`, `file_name`, `uploaded_on`, `status`, `Id_produktu`) VALUES
+(7, 'black_knight.png', '2022-05-12 09:35:34', '1', 25),
+(8, 'szafka_png.jpg', '2022-05-12 09:35:34', '1', 25),
+(9, 'vdolce.png', '2022-05-12 09:35:34', '1', 25),
+(11, 'vdolce.png', '2022-05-12 10:09:15', '1', 26),
+(12, 'pies.png', '2022-05-12 11:27:38', '1', 27);
 
 -- --------------------------------------------------------
 
@@ -164,6 +180,7 @@ CREATE TABLE `orders` (
   `Id_platnosci` int(11) NOT NULL,
   `Data_zamowienia` date NOT NULL,
   `Cena` int(11) NOT NULL,
+  `Ilosc` int(11) NOT NULL,
   `Ulica` text NOT NULL,
   `Nr_budynku` text NOT NULL,
   `Kod_pocztowy` int(11) NOT NULL,
@@ -176,10 +193,9 @@ CREATE TABLE `orders` (
 -- Zrzut danych tabeli `orders`
 --
 
-INSERT INTO `orders` (`Id_zamowienia`, `Id_klienta`, `Id_dostawy`, `Id_platnosci`, `Data_zamowienia`, `Cena`, `Ulica`, `Nr_budynku`, `Kod_pocztowy`, `Miasto`, `Id_wojewodztwa`, `Id_statusu`) VALUES
-(1, 1, 3, 2, '2022-05-10', 12570, 'Półrzeczki', '208', 34643, 'Jurków', 6, 0),
-(2, 1, 1, 1, '2022-05-10', 12571, 'Półrzeczki', '208', 34643, 'Jurków', 6, 0),
-(3, 1, 1, 1, '2022-05-11', 12571, 'Półrzeczki', '208', 34643, 'Jurków', 6, 0);
+INSERT INTO `orders` (`Id_zamowienia`, `Id_klienta`, `Id_dostawy`, `Id_platnosci`, `Data_zamowienia`, `Cena`, `Ilosc`, `Ulica`, `Nr_budynku`, `Kod_pocztowy`, `Miasto`, `Id_wojewodztwa`, `Id_statusu`) VALUES
+(5, 1, 1, 1, '2022-05-12', 21, 0, 'Półrzeczki', '208', 34643, 'Jurków', 6, 0),
+(6, 1, 1, 1, '2022-05-12', 21, 0, 'Półrzeczki', '208', 34643, 'Jurków', 6, 0);
 
 -- --------------------------------------------------------
 
@@ -226,25 +242,17 @@ CREATE TABLE `products` (
   `Opis` varchar(255) COLLATE utf8mb4_polish_ci NOT NULL,
   `Id_kategorii` varchar(255) COLLATE utf8mb4_polish_ci NOT NULL,
   `Cena` int(255) NOT NULL,
-  `Ilosc` int(255) NOT NULL,
-  `Id_zdjecia` int(11) NOT NULL
+  `Ilosc` int(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
 --
 -- Zrzut danych tabeli `products`
 --
 
-INSERT INTO `products` (`Id_produktu`, `Nazwa`, `Opis`, `Id_kategorii`, `Cena`, `Ilosc`, `Id_zdjecia`) VALUES
-(1, '1000 Vdolcy', ' Ten przedmiot obejmuje tylko konta fortnite po zakupie zostanie dodane do podannego konta vdolce', '2', 123, 23, 0),
-(2, 'V-DOLCE 2500', ' Ten przedmiot obejmuje tylko konta fortnite po zakupie zostanie dodane do podanego konta vdolce', '1', 50, 10, 0),
-(3, 'SKIN AURA', ' Po zakupie dostaaniesz na maila kod ktory mozesz aktywowac na stronie epicgames.com/reedem', '2', 20, 100, 0),
-(4, 'sdfgsdfgserfggfwe', ' asdfgsadfgsdfgsafdfsaadfs', '2', 12234, 23452345, 0),
-(5, 'siema siema siema', ' siema siema siemasiema siema siemasiema siema siemasiema siema siemasiema siema siemasiema siema siemasiema siema siemasiema siema siemasiema siema siemasiema siema siemasiema siema siemasiema siema siemasiema siema siemasiema siema siemasiema siema siem', '2', 123, 345, 0),
-(6, 'test', 'siema siema siemasiema siema siemasiema siema siemasiema siema siemasiema siema siemasiema siema siemasiema siema siemasiema siema siemasiema siema siemasiema siema siemasiema siema siemasiema siema siemasiema siema siemasiema siema siemasiema siema siem', '1', 123, 123, 0),
-(10, 'a', ' a', '3', 624, 23, 0),
-(11, 'b', ' b', '1', 62435, 234, 0),
-(12, 'c', ' c', '3', 533, 3, 0),
-(13, 'd', ' d', '3', 424, 53, 0);
+INSERT INTO `products` (`Id_produktu`, `Nazwa`, `Opis`, `Id_kategorii`, `Cena`, `Ilosc`) VALUES
+(25, '1000 VDOLCY', 'Po zakupie tego przedmiotu zostanie dodane 1000 Vdolcy do twojego konta fortnite', '1', 20, 5),
+(26, 'Vdolce 5000', 'awdawdawdawdawd', '1', 24, 2),
+(27, 'test', 'test', '2', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -317,7 +325,7 @@ ALTER TABLE `delivery_method`
 -- Indeksy dla tabeli `images`
 --
 ALTER TABLE `images`
-  ADD PRIMARY KEY (`Id_zdjecia`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indeksy dla tabeli `orders`
@@ -363,7 +371,7 @@ ALTER TABLE `accounts_address`
 -- AUTO_INCREMENT dla tabeli `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `Id_koszyka` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `Id_koszyka` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT dla tabeli `categories`
@@ -381,13 +389,13 @@ ALTER TABLE `delivery_method`
 -- AUTO_INCREMENT dla tabeli `images`
 --
 ALTER TABLE `images`
-  MODIFY `Id_zdjecia` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT dla tabeli `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `Id_zamowienia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `Id_zamowienia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT dla tabeli `payments`
@@ -399,7 +407,7 @@ ALTER TABLE `payments`
 -- AUTO_INCREMENT dla tabeli `products`
 --
 ALTER TABLE `products`
-  MODIFY `Id_produktu` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `Id_produktu` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT dla tabeli `provinces`
