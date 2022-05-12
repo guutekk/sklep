@@ -71,7 +71,7 @@
 		}else{ 
 			$statusMsg = 'Please select a file to upload.'; 
 		} 
-			//header('Location: Produkty.php');
+			header('Location: Produkty.php');
 	}
  ?>
 <!DOCTYPE html>

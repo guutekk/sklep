@@ -313,3 +313,7 @@ h3{
 hr{
     margin: 20px 110px 80px 110px;
 }
+.content .image img{
+width: 100%;
+height: auto;
+}

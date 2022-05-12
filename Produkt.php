@@ -17,6 +17,19 @@
         $ilosc = $_POST['ilosc'];
         header("Location: Koszyk_modyfikacje.php?mode=dodaj&id_produktu=$row[Id_produktu]&ilosc=$ilosc");
     }
+
+
+    $sql_zdjecie_glowne = "SELECT * FROM images WHERE Id_produktu = $_GET[id] LIMIT 1";
+	$result_zdjecie_glowne = mysqli_query($connect, $sql_zdjecie_glowne);
+    $row_glowne = mysqli_fetch_assoc($result_zdjecie_glowne);
+    $id_glowne = $row_glowne['id'];
+
+    $sql_zdjecia_poboczne ="SELECT * FROM images WHERE Id_produktu = $_GET[id] AND Id!=$id_glowne";
+    $result_zdjecie_poboczne = mysqli_query($connect, $sql_zdjecia_poboczne);
+    if(mysqli_num_rows($result_zdjecie_poboczne)<1)
+    {
+        echo "test";
+    }
 ?>
 
 <!DOCTYPE html>
@@ -92,23 +105,23 @@
                 <div class = "img-display">
                     <div class = "img-showcase">
                         <?php
-                            for($i=0; $i<mysqli_num_rows($result); $i++)
-                            {
-                                echo<<<html
-                                    <img src = "$row[Id_zdjecia]">
-                                html;
-                            }
+                            $imageURL = 'images/'.$row_glowne["file_name"];
+                            echo<<<html
+                                <img src = "$imageURL">
+                            html;
                         ?>
                     </div>
                 </div>
                 <div class = "img-select">
                     <div class = "img-item">
                     <?php
-                        for($i=0; $i<mysqli_num_rows($result); $i++)
+                        for($i=0; $i<mysqli_num_rows($result_zdjecie_poboczne); $i++)
                         {
+                            $row_poboczne = mysqli_fetch_assoc($result_zdjecie_poboczne);
+                            $imageURL = 'images/'.$row_poboczne["file_name"];
                             echo<<<html
-                            <a href = "#" data-id = "1">
-                                <img src = "$row[Id_zdjecia]">
+                            <a href = "#" data-id = "$i">
+                                <img src = "$imageURL">
                             </a>
                             html;
                         }

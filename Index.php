@@ -23,7 +23,6 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Bigibongo Shop</title>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css"/>
 	<link rel="stylesheet" href="css/style.css">
 
@@ -102,13 +101,12 @@
 									</div>
 									<div class="image">
 									html;
-
-									while($row = $result_zdjecie->fetch_assoc()){
+										$row = mysqli_fetch_assoc($result_zdjecie);
 										$imageURL = 'images/'.$row["file_name"];
+										
 										echo<<<html
-										<img src="$imageURL" alt=""/>
+										<img src="$imageURL"/>
 										html;
-									}
 									echo<<<html
 									</div>
 								</div>
@@ -130,15 +128,22 @@
 					for($i=0; $i<mysqli_num_rows($result1); $i++)
 					{
 						$row = mysqli_fetch_assoc($result1);
+						$sql_zdjecie = "SELECT * FROM images WHERE Id_produktu = $row[Id_produktu] LIMIT 1";
+						$result_zdjecie = mysqli_query($connect, $sql_zdjecie);
 						echo<<<html
-						<div class="grid-item">
-						<div class="content">
-						<div class="image">
-						<img src ="$row[Id_zdjecia]">
-						<h6>$row[Nazwa]</h6>
-						<a href="produkt.php?id=$row[Id_produktu]" class="btn">Zobacz</a>
-						</div>
-						</div>
+								<div class="grid-item">
+								<div class="content">
+								<div class="image">
+								html;
+								$row_zdjecie = mysqli_fetch_assoc($result_zdjecie);
+								$imageURL = 'images/'.$row_zdjecie["file_name"];
+								echo<<<html
+									<img src ="$imageURL">
+
+									<h6>$row[Nazwa]</h6>
+									<a href="produkt.php?id=$row[Id_produktu]" class="btn">Zobacz</a>
+								</div>
+							</div>
 						</div>
 						html;
 					}

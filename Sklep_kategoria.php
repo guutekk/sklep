@@ -185,11 +185,15 @@
                 for($i=0; $i<mysqli_num_rows($result); $i++)
                 {
                     $row = mysqli_fetch_assoc($result);
+                    $sql_zdjecie = "SELECT * FROM images WHERE Id_produktu = $row[Id_produktu] LIMIT 1";
+					$result_zdjecie = mysqli_query($connect, $sql_zdjecie);
+                    $row_zdjecie = mysqli_fetch_assoc($result_zdjecie);
+					$imageURL = 'images/'.$row_zdjecie["file_name"];
                     echo<<<html
                     <div class="Item">
                     <a href="produkt.php?id=$row[Id_produktu]" class="Item__link">
                         <div class="ImageContainer">
-                        <img src="images/aura.png" class="Image">
+                        <img src="$imageURL" class="Image">
                         </div>
                         <div class="Item__title">
                             <h2>$row[Nazwa]</h2>
@@ -198,7 +202,7 @@
                     </a>
                     <form method='POST' action='Koszyk_modyfikacje.php?mode=dodaj&id_produktu=$row[Id_produktu]'>
                         <button name='submit' class='btn'>Dodaj do koszyka</button>
-                    </form> 
+                    </form>    
                     </div>
                     html;
                 }
