@@ -211,7 +211,7 @@
                     $sql_zdjecie = "SELECT * FROM images WHERE Id_produktu = $row[Id_produktu] LIMIT 1";
 					$result_zdjecie = mysqli_query($connect, $sql_zdjecie);
                     $row_zdjecie = mysqli_fetch_assoc($result_zdjecie);
-					$imageURL = 'images/'.$row_zdjecie["file_name"];
+					$imageURL = 'images/'.$row_zdjecie["Nazwa_pliku"];
                     echo<<<html
                     <div class="Item">
                     <a href="produkt.php?id=$row[Id_produktu]" class="Item__link">

@@ -148,6 +148,11 @@ session_start();
                         {
                             $row = mysqli_fetch_assoc($result);
 
+                            $sql_zdjecie = "SELECT * FROM images WHERE Id_produktu= $row[Id_produktu]"; 
+                            $result_zdjecie= mysqli_query($connect, $sql_zdjecie);
+                            $row_zdjecie  = mysqli_fetch_assoc($result_zdjecie);
+                            $imageURL = 'images/'.$row_zdjecie['Nazwa_pliku'];
+
                             $ilosc = $row['Ilosc'];
                             $cena = $row['Cena'];
 
@@ -161,7 +166,7 @@ session_start();
                                 <tr> 
                                     <td>
                                         <a href='produkt.php?id=$row[Id_produktu]'>
-                                            <img src='images/aura.png'>
+                                            <img src='$imageURL'>
                                         </a>
                                     </td>
                                     <td>

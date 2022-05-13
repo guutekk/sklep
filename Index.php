@@ -102,7 +102,7 @@
 									<div class="image">
 									html;
 										$row = mysqli_fetch_assoc($result_zdjecie);
-										$imageURL = 'images/'.$row["file_name"];
+										$imageURL = 'images/'.$row["Nazwa_pliku"];
 										
 										echo<<<html
 										<img src="$imageURL"/>
@@ -136,7 +136,7 @@
 								<div class="image">
 								html;
 								$row_zdjecie = mysqli_fetch_assoc($result_zdjecie);
-								$imageURL = 'images/'.$row_zdjecie["file_name"];
+								$imageURL = 'images/'.$row_zdjecie["Nazwa_pliku"];
 								echo<<<html
 									<img src ="$imageURL">
 

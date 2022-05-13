@@ -18,18 +18,14 @@
         header("Location: Koszyk_modyfikacje.php?mode=dodaj&id_produktu=$row[Id_produktu]&ilosc=$ilosc");
     }
 
+    $sql_zdjecia ="SELECT * FROM images WHERE Id_produktu = $_GET[id]";
+    $result_zdjecie = mysqli_query($connect, $sql_zdjecia);
 
-    $sql_zdjecie_glowne = "SELECT * FROM images WHERE Id_produktu = $_GET[id] LIMIT 1";
-	$result_zdjecie_glowne = mysqli_query($connect, $sql_zdjecie_glowne);
-    $row_glowne = mysqli_fetch_assoc($result_zdjecie_glowne);
-    $id_glowne = $row_glowne['id'];
+    $sql_zdjecia_1 ="SELECT * FROM images WHERE Id_produktu = $_GET[id]";
+    $result_zdjecie_1 = mysqli_query($connect, $sql_zdjecia_1);
 
-    $sql_zdjecia_poboczne ="SELECT * FROM images WHERE Id_produktu = $_GET[id] AND Id!=$id_glowne";
-    $result_zdjecie_poboczne = mysqli_query($connect, $sql_zdjecia_poboczne);
-    if(mysqli_num_rows($result_zdjecie_poboczne)<1)
-    {
-        echo "test";
-    }
+
+    $id=0;
 ?>
 
 <!DOCTYPE html>
@@ -100,35 +96,41 @@
 
     <div class = "card-wrapper">
         <div class = "card">
-            <!-- card left -->
             <div class = "product-imgs">
                 <div class = "img-display">
                     <div class = "img-showcase">
                         <?php
-                            $imageURL = 'images/'.$row_glowne["file_name"];
-                            echo<<<html
-                                <img src = "$imageURL">
-                            html;
+                            for($i=0; $i<mysqli_num_rows($result_zdjecie); $i++)
+                            {
+                                $row_zdjecie = mysqli_fetch_assoc($result_zdjecie);
+                                $imageURL = 'images/'.$row_zdjecie["Nazwa_pliku"];
+                                echo<<<html
+                                    <img src = "$imageURL">
+                                html;
+                            }
                         ?>
                     </div>
                 </div>
+
                 <div class = "img-select">
-                    <div class = "img-item">
                     <?php
-                        for($i=0; $i<mysqli_num_rows($result_zdjecie_poboczne); $i++)
+                        for($i=0; $i<mysqli_num_rows($result_zdjecie_1); $i++)
                         {
-                            $row_poboczne = mysqli_fetch_assoc($result_zdjecie_poboczne);
-                            $imageURL = 'images/'.$row_poboczne["file_name"];
+                            $id+=1;
+                            $row_poboczne = mysqli_fetch_assoc($result_zdjecie_1);
+                            $imageURL = 'images/'.$row_poboczne["Nazwa_pliku"];
                             echo<<<html
-                            <a href = "#" data-id = "$i">
+                            <div class = "img-item">
+                                <a data-id = "$id">
                                 <img src = "$imageURL">
-                            </a>
+                                </a>
+                            </div>
                             html;
                         }
                     ?>
-                    </div>
                 </div>
                 </div>
+
                 <!-- card right -->
                 <div class = "product-content">
                 <h2 class = "product-title">
@@ -166,32 +168,39 @@
     <div class="grid-container">
         <?php
 			for($i=0; $i<mysqli_num_rows($result1); $i++)
-			{
-                $row1 = mysqli_fetch_assoc($result1);
+            {
+                $row = mysqli_fetch_assoc($result1);
+                $sql_zdjecie = "SELECT * FROM images WHERE Id_produktu = $row[Id_produktu] LIMIT 1";
+                $result_zdjecie = mysqli_query($connect, $sql_zdjecie);
                 echo<<<html
-					<div class="grid-item">
-						<div class="content">
-						    <div class="image">
-						        <img src ="$row1[Id_zdjecia]">
-						        <h6>$row1[Nazwa]</h6>
-					        	<a href="produkt.php?id=$row1[Id_produktu]" class="btn">Zobacz</a>
-				    		</div>
-						</div>
-					</div>
-				html;
+                        <div class="grid-item">
+                        <div class="content">
+                        <div class="image">
+                        html;
+                        $row_zdjecie = mysqli_fetch_assoc($result_zdjecie);
+                        $imageURL = 'images/'.$row_zdjecie["Nazwa_pliku"];
+                        echo<<<html
+                            <img src ="$imageURL">
+
+                            <h6>$row[Nazwa]</h6>
+                            <a href="produkt.php?id=$row[Id_produktu]" class="btn">Zobacz</a>
+                        </div>
+                    </div>
+                </div>
+                html;
             }
         ?>
   </div>
 </div>
 <footer>
-			<hr>
-			<div style="text-align: center; padding-bottom:30px;">
-				<h2 class ="contact-h2">BIGIBONGOSHOP.COM</h2>
-				<p class ="contact-p">ul. Marka Ligasa 15</p>
-				<p class ="contact-p">43-300 Limanowa</p>
-				<p class ="contact-p">sklep@bigibongo.com</p>
-			</div>
-		</footer>
+    <hr>
+    <div style="text-align: center; padding-bottom:30px;">
+        <h2 class ="contact-h2">BIGIBONGOSHOP.COM</h2>
+        <p class ="contact-p">ul. Marka Ligasa 15</p>
+        <p class ="contact-p">43-300 Limanowa</p>
+        <p class ="contact-p">sklep@bigibongo.com</p>
+    </div>
+</footer>
 
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
