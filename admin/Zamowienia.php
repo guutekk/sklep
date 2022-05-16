@@ -51,6 +51,7 @@
 				</ul>
 			</nav>
 		</div>
+		
 	<section>
 		<br><br><br>
 		<div class="navigaton-panel">

@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap');
+
 *{
   margin: 0;
   padding: 0;
@@ -89,72 +91,59 @@ nav ul {
 }
 
 .list-container{
-    padding: 130px;
-    overflow-wrap: normal;
+  padding: 130px;
+  overflow-wrap: normal;
 }
 
 .list-container h1{
-    font-size: 30px;
-    margin-bottom: 10px;
-    color: #333;
+  font-size: 30px;
+  margin-bottom: 10px;
+  color: #333;
 }
 
 .list-container table {
-    border-collapse: collapse;
-    width: 100%;
-  }  
+  border-collapse: collapse;
+  width: 100%;
+}  
 
 .list-container td {
-    padding: 40px;
-    text-align: center;
-    border-bottom: 1px solid #ddd;
-  }
+  padding: 40px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
 
 .list-container .error{
-    margin: 10px 0;
-    display: block;
-    background: crimson;
-    color: #fff;
-    border-radius: 5px;
-    font-size: 20px;
-    padding: 10px;
+  margin: 10px 0;
+  display: block;
+  background: crimson;
+  color: #fff;
+  border-radius: 5px;
+  font-size: 20px;
+  padding: 10px;
 }
 
 .list-container input{
-    width: 100%;
-    padding: 10px 15px;
-    font-size: 18px;
-    margin: 1px 0;
+  width: 100%;
+  padding: 10px 15px;
+  font-size: 18px;
+  margin: 1px 0;
 }
 
-.swiper {
-    width: 100%;
-    height: 100%;
-  }
-
-  .swiper-slide {
-    font-size: 18px;
-    height: auto;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    padding: 30px;
-  }
-
-  .btn{
-    margin-top: 1rem;
-    display: inline-block;
-    font-size: 20px;
-    color: #fff;
-    background: black;
-    border-radius: 20px;
-    cursor: pointer;
-    padding: .5rem 2rem;
-    border: 3px solid black;
-    transition-duration: 0.4s;
+.btn{
+  margin-top: 1rem;
+  display: inline-block;
+  font-size: 20px;
+  color: #fff;
+  background: black;
+  border-radius: 20px;
+  cursor: pointer;
+  padding: .5rem 2rem;
+  border: 3px solid black;
+  transition-duration: 0.4s;
 }
 
 .btn:hover{
-    background: white;
-    color: black;
-    border: 3px solid black;
+  background: white;
+  color: black;
+  border: 3px solid black;
 }

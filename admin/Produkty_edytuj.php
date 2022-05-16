@@ -105,7 +105,6 @@
 					<input type='number' name='ilosc' value='$row[Ilosc]'>
 					html;
 				?>
-				<button class='btn'>Edytuj zdjecia</button>
 				<input type="submit" name="submit" value="Edytuj produkt" class="form-btn">
 				<br>
 				<a href="Produkty.php" class="btn">Powrót</a>

@@ -8,6 +8,11 @@
 	$sql = "SELECT * FROM products";
 	$result = mysqli_query($connect, $sql);
 
+	if(isset($_POST['submit_zdjecia'])){
+		$id_produktu = $_POST['id_produktu'];
+		header("Location: Zdjecia.php?id=$id_produktu");
+	}
+
 	if(isset($_POST['submit_usun']))
 	{
 		$id_produktu = $_POST['id_produktu'];
@@ -113,6 +118,7 @@
 							<td>
 							<form method='POST'>
 								<input type='hidden' name='id_produktu' value='$row[Id_produktu]'>
+								<button name='submit_zdjecia' class='btn'>Zdjęcia</button>
 								<button name='submit_edycja' class='btn'>Edytuj</button>
 								<button name='submit_usun' class='btn'>Usuń</button>
 							</form>
