@@ -1,9 +1,3 @@
-var swiper = new Swiper(".mySwiper", {
-    direction: "vertical",
-    slidesPerView: "auto",
-    freeMode: true,
-    scrollbar: {
-      el: ".swiper-scrollbar",
-    },
-    mousewheel: true,
-  });
+function show_form(){
+  document.getElementById("form").style.display="block";
+}

@@ -9,10 +9,9 @@
     text-decoration: none;
 }
 
-/*.full-page{
-    height: 100%;
-    width: 100%;  
-}*/
+a{
+    text-decoration: none;
+}
 
 .navbar{
     display: flex;
@@ -92,5 +91,93 @@ nav ul {
 }
 
 section{
-    padding: 1rem 20%;
+    padding: 50px
+}
+
+.col-md-4 img{
+    width: 70%;
+    height: 70%;
+}
+
+.btn{
+    margin-top: 5px;
+    font-size: 25px;
+}
+
+.btn:hover{
+    margin-top: 5px;
+    outline: 2px solid black;
+    border-radius: 13px;
+}
+
+.btn-add{
+    margin-top: 1rem;
+    display: inline-block;
+    font-size: 20px;
+    color: #fff;
+    background: black;
+    border-radius: 20px;
+    cursor: pointer;
+    padding: .5rem 2rem;
+    border: 3px solid black;
+    transition-duration: 0.4s;
+    margin-left: 73px;
+}
+
+.btn-add:hover{
+    background: white;
+    color: black;
+    border: 3px solid black;
+}
+
+.btn-back{
+    display: inline-block;
+    font-size: 20px;
+    color: #fff;
+    background: black;
+    border-radius: 20px;
+    cursor: pointer;
+    padding: .5rem 2rem;
+    border: 3px solid black;
+    transition-duration: 0.4s;
+}
+
+.btn-back:hover{
+    background: white;
+    color: black;
+    border: 3px solid black;
+}
+
+.container .form{
+    display: none;
+}
+
+.btn-add-form{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    display: inline-block;
+    font-size: 20px;
+    color: #fff;
+    background: black;
+    border-radius: 20px;
+    cursor: pointer;
+    padding: .5rem 2rem;
+    border: 3px solid black;
+    transition-duration: 0.4s;
+}
+
+.btn-add-form:hover{
+    background: white;
+    color: black;
+    border: 3px solid black;
+}
+
+.col-md-8{
+    outline: 2px solid black;
+    padding: 20px;
+}
+
+.col-md-8 input{
+    width: 50%;
+
 }

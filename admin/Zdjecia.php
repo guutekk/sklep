@@ -2,12 +2,20 @@
 
     session_start();
 
+	if (!isset($_SESSION['user']) || !$_SESSION['type']==1) {
+		header('Location: ../index.php');
+	}
+
     $id_produktu = $_GET['id'];
     $connect=new mysqli('localhost', 'root', '', 'sklep');
 
     $sql_produkt = "SELECT * FROM products WHERE Id_produktu = $id_produktu";
     $result_produkt = mysqli_query($connect, $sql_produkt);
     $row_produkt = mysqli_fetch_assoc($result_produkt);
+
+	$sql_zdjecia = "SELECT * FROM images WHERE Id_produktu =$id_produktu";
+	$result_zdjecia = mysqli_query($connect, $sql_zdjecia);
+    
 ?>
 <!DOCTYPE html>
 <html lang="pl">
@@ -16,6 +24,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Bigibongo Shop</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 	<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
 	<link rel="stylesheet" href="css/zdjecia.css">
@@ -54,24 +63,51 @@
 
         <section>
         <div class="container">
-            <div class="row">
-                <div class="col-md-offset-2 col-md-8">
-                    <h1>Zdjecia dla 
-                        "
-                        <?php
-                            echo $row_produkt['Nazwa'];
-                        ?>
-                        "
-                    </h1>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-3">ad</div>
-                <div class="col-md-3">asd</div>
-                <div class="col-md-3">asd</div>
-                <div class="col-md-3">asd</div>
-            </div>
+			<h1>Produkt <?php echo $row_produkt['Nazwa']; ?></h1>
+			<a href="Produkty.php" class="btn-back">Powrót</a>
         </div>
+		
+		<br><br>	
+		<div class="container">
+			<div class="row">
+				<h2>Zdjęcia <br>
+				<a href='#form'><button class="btn-add-form" onclick="show_form()">Dodaj zdjęcia</button></a> </h2>
+				<?php
+					for($i=0; $i<mysqli_num_rows($result_zdjecia); $i++){
+						$row = mysqli_fetch_assoc($result_zdjecia);
+						$imageURL = $row['Nazwa_pliku'];						
+						echo<<<html
+							<div class="col-md-4">
+								<img src='../images/$imageURL		'/>
+								<form method="POST" action="Zdjecia_modyfikacje.php">
+									<input type='hidden' name='id_produktu' value='$id_produktu'>
+									<input type='hidden' name='id_zdjecia' value='$row[Id_zdjecia]'>
+									<button class='btn' name='submit_usun_poboczne'>Usuń</button>
+								</form>
+							</div>
+						html;
+					}
+				?>
+			</div>
+			</div>
+
+			<div class="container form" id="form">
+				<div class="row">
+					<div class="col-md-8">
+						<h2>
+							Formularz dodawania zdjęcia
+						</h2>
+
+						<form method="POST" action="">
+							<input type="file" name="files[]" multiple>
+							<button name='submit_dodaj' class="btn-add">Dodaj zdjęcie</button>
+						</form>
+					</div>			
+				</div>
+			</div>
         </section>
+
+
+		<script src="js/script.js"></script>
 </body>
 </html>
