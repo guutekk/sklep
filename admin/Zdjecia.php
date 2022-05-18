@@ -15,6 +15,10 @@
 
 	$sql_zdjecia = "SELECT * FROM images WHERE Id_produktu =$id_produktu";
 	$result_zdjecia = mysqli_query($connect, $sql_zdjecia);
+
+	if(mysqli_num_rows($result_zdjecia)<1){
+		$error[]="Ten produkt nie ma dodanych zdjęć!";
+	}
     
 ?>
 <!DOCTYPE html>
@@ -63,51 +67,94 @@
 
         <section>
         <div class="container">
-			<h1>Produkt <?php echo $row_produkt['Nazwa']; ?></h1>
-			<a href="Produkty.php" class="btn-back">Powrót</a>
+			<h1>Produkt <?php echo $row_produkt['Nazwa']?> 
+				<a href="Produkty.php" class="btn-back">Powrót</a>
+			</h1>
         </div>
 		
 		<br><br>	
-		<div class="container">
+		<div class="container" id="photo">
 			<div class="row">
-				<h2>Zdjęcia <br>
-				<a href='#form'><button class="btn-add-form" onclick="show_form()">Dodaj zdjęcia</button></a> </h2>
+				<h2>
+					Zdjęcia &nbsp
+					<button class="btn-add-form" onclick="show_form()" name="add">Dodaj zdjęcia</button>
+				</h2>
 				<?php
-					for($i=0; $i<mysqli_num_rows($result_zdjecia); $i++){
-						$row = mysqli_fetch_assoc($result_zdjecia);
-						$imageURL = $row['Nazwa_pliku'];						
-						echo<<<html
-							<div class="col-md-4">
-								<img src='../images/$imageURL		'/>
-								<form method="POST" action="Zdjecia_modyfikacje.php">
-									<input type='hidden' name='id_produktu' value='$id_produktu'>
-									<input type='hidden' name='id_zdjecia' value='$row[Id_zdjecia]'>
-									<button class='btn' name='submit_usun_poboczne'>Usuń</button>
-								</form>
-							</div>
-						html;
+					if(isset($error)){
+						foreach($error as $error){
+							echo<<<html
+								<h3>$error</h3>
+							html;
+						}
+					}else{
+						for($i=0; $i<mysqli_num_rows($result_zdjecia); $i++){
+							$row = mysqli_fetch_assoc($result_zdjecia);
+							$imageURL = $row['Nazwa_pliku'];						
+							echo<<<html
+								<div class="col-md-4">
+									<img src='../images/$imageURL'/>
+									<form method="POST" action="Zdjecia_modyfikacje.php">
+										<input type='hidden' name='id_produktu' value='$id_produktu'>
+										<input type='hidden' name='id_zdjecia' value='$row[Id_zdjecia]'>
+										<button class='btn' name='submit_usun'>Usuń</button>
+									</form>
+									<button class="btn" id='$row[Id_zdjecia]' onclick="show_form_edit(this.id)">Edytuj</button>
+								</div>
+							html;
+						}
 					}
 				?>
 			</div>
-			</div>
+		</div>
 
-			<div class="container form" id="form">
-				<div class="row">
-					<div class="col-md-8">
-						<h2>
-							Formularz dodawania zdjęcia
-						</h2>
-
-						<form method="POST" action="">
-							<input type="file" name="files[]" multiple>
-							<button name='submit_dodaj' class="btn-add">Dodaj zdjęcie</button>
-						</form>
-					</div>			
+		<div class="container form" id="form">
+			<div class="row">
+				<div class="col-md-offset-1 col-md-10">
+					<h2>
+						Dodaj zdjęcie &nbsp
+					<button class="btn-add-form" onclick="hide_form()" name="cancel">Anuluj</button>
+					</h2>
+					<form method="POST" action="Zdjecia_modyfikacje.php" enctype="multipart/form-data">
+						<?php
+							echo"<input type='hidden' name='id_produktu' value='$row_produkt[Id_produktu]'>";
+						?>
+						<input type="file" name="files[]" multiple>
+						<br>
+						<button class="btn-add-form" name="submit_dodaj">Dodaj</button>
+					</form>
 				</div>
 			</div>
+		</div>
+
+		<div class="container form" id="form-edit">
+			<div class="row">
+				<div class="col-md-offset-1 col-md-10">
+					<h2>
+						Edytuj zdjęcie &nbsp
+					<button class="btn-add-form" onclick="hide_form_edit()" name="cancel">Anuluj</button>
+					</h2>
+					<form method="POST" action="Zdjecia_modyfikacje.php" enctype="multipart/form-data">
+						<?php
+							echo"
+							<input type='hidden' name='id_produktu' value='$row_produkt[Id_produktu]'>
+							";
+						?>
+						<input type='hidden' name='id_zdjecia' id='id_zdjecia'>
+						<input type="file" name="files[]" multiple>
+						<br>
+						<button class="btn-add-form" name="submit_edytuj">Edytuj</button>
+					</form>
+				</div>
+			</div>
+		</div>
+
+
+
         </section>
 
-
-		<script src="js/script.js"></script>
+	<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+	<script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+	<script src="js/script.js"></script>
 </body>
 </html>

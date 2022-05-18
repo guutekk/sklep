@@ -22,8 +22,8 @@
 
 		$targetDir = "../images/"; 
 		$allowTypes = array('jpg','png','jpeg','gif'); 
+		$insertValuesSQL = "";
 		
-		$statusMsg = $errorMsg = $insertValuesSQL = $errorUpload = $errorUploadType = ''; 
 		$fileNames = array_filter($_FILES['files']['name']); 
 		if(!empty($fileNames)){ 
 			foreach($_FILES['files']['name'] as $key=>$val){ 
@@ -43,33 +43,15 @@
 					if(move_uploaded_file($_FILES["files"]["tmp_name"][$key], $targetFilePath)){ 
 						// Image db insert sql 
 						$insertValuesSQL .= "('".$fileName."', NOW(), '".$id_produktu."'),";
-					}else{ 
-						$errorUpload .= $_FILES['files']['name'][$key].' | '; 
-					} 
-				}else{ 
-					$errorUploadType .= $_FILES['files']['name'][$key].' | '; 
-				} 
+					}
+				}
 			} 
-			
-			// Error message 
-			$errorUpload = !empty($errorUpload)?'Upload Error: '.trim($errorUpload, ' | '):''; 
-			$errorUploadType = !empty($errorUploadType)?'File Type Error: '.trim($errorUploadType, ' | '):''; 
-			$errorMsg = !empty($errorUpload)?'<br/>'.$errorUpload.'<br/>'.$errorUploadType:'<br/>'.$errorUploadType; 
 
 			if(!empty($insertValuesSQL)){ 
 				$insertValuesSQL = trim($insertValuesSQL, ','); 
 				// Insert image file name into database 
-            	$insert = $connect->query("INSERT INTO images (file_name, uploaded_on, Id_produktu) VALUES $insertValuesSQL"); 
-				if($insert){ 
-					$statusMsg = "Files are uploaded successfully.".$errorMsg; 
-				}else{ 
-					$statusMsg = "Sorry, there was an error uploading your file."; 
-				} 
-			}else{ 
-				$statusMsg = "Upload failed! ".$errorMsg; 
-			} 
-		}else{ 
-			$statusMsg = 'Please select a file to upload.'; 
+            	$insert = $connect->query("INSERT INTO images (Nazwa_pliku, uploaded_on, Id_produktu) VALUES $insertValuesSQL"); 
+			}
 		} 
 			header('Location: Produkty.php');
 	}
