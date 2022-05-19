@@ -76,25 +76,25 @@
                                 <td>Ulica</td>
                                 <td>
                                     <form method="POST">
-                                    <input type="text" name = "ulica" minlength="3" require placeholder="Ulica">
+                                    <input type="text" name = "ulica" minlength="3" required placeholder="Ulica">
                                 </td>
                             </tr>
                             <tr>
                                 <td>Nr. budynku</td>
                                 <td>
-                                    <input type="text" name = "nr_budynku" minlength="3" require placeholder="Nr. budynku">
+                                    <input type="text" name = "nr_budynku" minlength="3" required placeholder="Nr. budynku">
                                 </td>
                             </tr>
                             <tr>
                                 <td>Kod pocztowy</td>
                                 <td>
-                                    <input type="text" name = "kod_pocztowy" minlength="5" maxlength="5" require placeholder="Kod pocztowy">
+                                    <input type="text" name = "kod_pocztowy" minlength="5" maxlength="5" required placeholder="Kod pocztowy">
                                 </td>
                             </td>
                             <tr>
                                 <td>Miasto</td>
                                 <td>
-                                    <input type="text" name = "miasto"  require placeholder="Miasto">
+                                    <input type="text" name = "miasto"  required placeholder="Miasto">
                                 </td>
                             </tr>
                             <tr>

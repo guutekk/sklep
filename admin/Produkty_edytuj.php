@@ -85,24 +85,24 @@
 				<h3>Edytowanie produktu</h3>
 				<?php
 				echo<<<html
-					<input type='text' name='nazwa' value='$row[Nazwa]'>
-					<textarea name='opis'>$opis</textarea>
+					<input type='text' name='nazwa' required value='$row[Nazwa]'>
+					<textarea name='opis' required>$opis</textarea>
 					<select name='kategoria'>
 				html;
-					echo"<option value='$row1[Id_kategorii]'>$row1[Nazwa]</option>";
+					echo"<option value='$row1[Id_kategorii]' required>$row1[Nazwa]</option>";
 
 				for($i=0; $i<mysqli_num_rows($result2); $i++)
 				{
 					$row1 = mysqli_fetch_assoc($result2);
 					echo<<<html
-						<option value="$row1[Id_kategorii]">$row1[Nazwa]</option>
+						<option value="$row1[Id_kategorii]" required>$row1[Nazwa]</option>
 					html;
 				}
 
 				echo<<<html
 					</select>
-					<input type='number' name = 'cena' value='$row[Cena]'>
-					<input type='number' name='ilosc' value='$row[Ilosc]'>
+					<input type='number' name = 'cena' required value='$row[Cena]'>
+					<input type='number' name='ilosc' required value='$row[Ilosc]'>
 					html;
 				?>
 				<input type="submit" name="submit" value="Edytuj produkt" class="form-btn">

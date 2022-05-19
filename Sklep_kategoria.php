@@ -6,6 +6,10 @@
     $sql = "SELECT * FROM products WHERE Id_kategorii = $_GET[id]";
     $result = mysqli_query($connect, $sql);
 
+    if(mysqli_num_rows($result)<1){
+        $error[] = "Nie znaleziono przedmiotów z tej kategorii!";
+    }
+
     $sql1 = "SELECT * FROM categories";
     $result1 =mysqli_query($connect, $sql1);
 
@@ -181,7 +185,14 @@
 
 
         <div class="Items">
+            
             <?php
+
+                if(isset($error)){
+                    foreach($error as $error){
+                        echo "<h1>$error</h1>";
+                    }
+                }
                 for($i=0; $i<mysqli_num_rows($result); $i++)
                 {
                     $row = mysqli_fetch_assoc($result);

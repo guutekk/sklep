@@ -1,0 +1,133 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap');
+
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background: white;
+    text-decoration: none;
+}
+
+/*.full-page{
+    height: 100%;
+    width: 100%;  
+}*/
+
+.navbar{
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    padding-left: 50px;
+    padding-right: 30px;
+    padding-top: 50px;
+}
+nav{
+    flex: 1;
+    text-align: right;
+}
+
+.navbar div a{
+    font-size: 30px;
+    color: black;
+}
+
+.navbar div a:hover{
+    color: black;
+}
+
+nav ul{
+    display: inline-block;
+    list-style: none;
+    top: 0;
+    width: 100%;
+}
+
+nav ul li{
+    display: inline-block;
+    margin-right: 70px;
+}
+
+nav ul li a{
+    text-decoration: none;
+    font-size: 20px;
+    color: black;
+    font-family: sans-serif;
+    padding: 14px;
+    border-radius: 20px;
+    border: 3px solid white;
+    transition-duration: 0.4s;
+}
+
+nav ul li a:hover{
+    background: white;
+    color: black;
+    border: 3px solid black;
+}
+
+nav ul li:hover ul {
+    display: block;
+}
+
+nav ul li ul{
+    position: absolute;
+    width: 250px;
+    text-align: center;
+    display: none;
+}
+
+nav ul li ul li { 
+    display: block; 
+    width: 200px;
+  }
+
+nav ul li ul li a {
+    display:block !important;
+} 
+
+nav ul {
+    display: inline;
+    margin: 0;
+    padding: 0;
+}
+
+section{
+    padding: 1rem 20%;
+}
+
+.btn{
+    margin-top: 1rem;
+    display: inline-block;
+    font-size: 20px;
+    color: #fff;
+    background: black;
+    border-radius: 20px;
+    cursor: pointer;
+    padding: .5rem 2rem;
+    border: 3px solid black;
+    transition-duration: 0.4s;
+  }
+  
+  .btn:hover{
+    background: white;
+    color: black;
+    border: 3px solid black;
+  }
+
+ table {
+    border-collapse: collapse;
+    width: 100%;
+  }  
+ th, td {
+    padding: 40px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+   margin-top: 100px;
+ }
+.container .row{
+    margin-top: 70px;
+} 
+
+#order{
+    display: none;
+}

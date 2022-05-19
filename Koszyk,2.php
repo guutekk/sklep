@@ -20,7 +20,10 @@
 
     if(mysqli_num_rows($result_adres)<1)
 	{
-		$error = "Dodaj adres zamieszkania!";
+		$ulica_form = "";
+        $budynek_form = "";
+        $pocztowy_form ="";
+        $miasto_form="";
 	}else
     {
         $wojewodztwo = $row_adres['Id_wojewodztwa'];
@@ -146,7 +149,7 @@
                                     echo<<<html
                                         <div class='radio'>
                                             <label>
-                                                <input type='radio' name='radio_dostawa' value='$row[Id_dostawy]' checked>
+                                                <input type='radio' name='radio_dostawa' required value='$row[Id_dostawy]' checked>
                                                 $row[Nazwa] | $row[Cena],00zł
                                             </label>
                                         </div>
@@ -156,7 +159,7 @@
                                 echo "
                                 <div class='radio'>
                                     <label>
-                                        <input type='radio' name='radio_dostawa' value='$row[Id_dostawy]'>
+                                        <input type='radio' name='radio_dostawa' required value='$row[Id_dostawy]'>
                                         $row[Nazwa] | $row[Cena],00zł
                                     </label>
                                 </div>";
@@ -172,7 +175,7 @@
                                     echo<<<html
                                         <div class='radio'>
                                             <label>
-                                                <input type='radio' name='radio_platnosc' value='$row[Id_platnosci]' checked>
+                                                <input type='radio' name='radio_platnosc' required value='$row[Id_platnosci]' checked>
                                                 $row[Nazwa] | $row[Cena],00zł
                                             </label>
                                         </div>
@@ -182,7 +185,7 @@
                                     echo "
                                     <div class='radio'>
                                         <label>
-                                            <input type='radio' name='radio_platnosc' value='$row[Id_platnosci]'>
+                                            <input type='radio' name='radio_platnosc' required value='$row[Id_platnosci]'>
                                             $row[Nazwa] | $row[Cena],00zł
                                         </label>
                                     </div>";
@@ -210,14 +213,14 @@
                                             Ulica
                                         </td>
                                         <td>
-                                            <input type='text' name='ulica' value='$row_adres[Ulica]'>
+                                            <input type='text' name='ulica' required value='$ulica_form'>
                                         </td>
                                         </tr>
                                         <tr>
                                             <td>Nr. budynku</td>
                                             <td>
                                         
-                                                <input type='text' name='nr_budynku' value='$row_adres[Nr_budynku]'>
+                                                <input type='text' name='nr_budynku' required value='$budynek_form'>
                                             
                                             </td>
                                         </tr>
@@ -225,20 +228,20 @@
                                             <td>Kod pocztowy</td>
                                             <td>
                                         
-                                            <input type='text' name='kod_pocztowy' value='$row_adres[Kod_pocztowy]'>
+                                            <input type='text' name='kod_pocztowy' required value='$pocztowy_form'>
                                             
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>Miasto</td>
                                             <td>
-                                                <input type='text' name='miasto' value='$row_adres[Miasto]'>
+                                                <input type='text' name='miasto' required value='$miasto_form'>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>Wojewodztwo</td>
                                             <td>
-                                            <select name='wojewodztwo'>
+                                            <select name='wojewodztwo' required>
                                                         <option value='$row_wojewodztwo[Id_wojewodztwa]'>$row_wojewodztwo[Nazwa]</option>
                                                         ";
                                                         for($i=0; $i<mysqli_num_rows($result_wojewodztwo_2); $i++)

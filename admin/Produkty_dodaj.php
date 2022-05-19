@@ -105,7 +105,7 @@
 				<h3>Dodawanie produktu</h3>
 				<input type="text" name="nazwa" required placeholder="Nazwa produktu">
 				<textarea name="opis" required placeholder="Opis"></textarea>
-				<select name="kategoria">
+				<select name="kategoria" required>
 					<?php
 						for($i=0; $i<mysqli_num_rows($result); $i++)
 						{
@@ -116,9 +116,9 @@
 						}
 					?>
 				</select>
-				<input type="number" name = "cena" placeholder="Cena">
+				<input type="number" name = "cena" required placeholder="Cena">
 				<input type="number" name="ilosc" required placeholder="Ilość">
-				<input type="file" name="files[]" multiple style="border: 2px solid black">
+				<input type="file" name="files[]" required multiple style="border: 2px solid black">
 				<input type="submit" name="submit" value="Dodaj produkt" class="form-btn">
 				<br>
 				<a href="Produkty.php" class="btn">Powrót</a>

@@ -72,13 +72,12 @@
 				<h3>Edytowanie <?php echo $row['Imie']?></h3>
 				<?php
 				echo<<<html
-					<input type='text' name='imie' value='$row[Imie]'>
-					<input type='text' name='nazwisko' value='$row[Nazwisko]'>
-					<input type='text' name = 'email' value='$row[Email]'>
-					<input type='number' name='telefon' value='$row[Telefon]'>
+					<input type='text' name='imie' required value='$row[Imie]'>
+					<input type='text' name='nazwisko' required value='$row[Nazwisko]'>
+					<input type='text' name = 'email' required value='$row[Email]'>
+					<input type='number' name='telefon' required value='$row[Telefon]'>
 					html;
 				?>
-				<input type="submit" name="submit_reset" value="Resetuj hasło" class="form-btn">
 				<input type="submit" name="submit" value="Edytuj użytkownika" class="form-btn">
 				<br>
 				<a href="Uzytkownicy.php" class="btn">Powrót</a>

@@ -118,7 +118,7 @@
 						<?php
 							echo"<input type='hidden' name='id_produktu' value='$row_produkt[Id_produktu]'>";
 						?>
-						<input type="file" name="files[]" multiple>
+						<input type="file" name="files[]" required multiple>
 						<br>
 						<button class="btn-add-form" name="submit_dodaj">Dodaj</button>
 					</form>
@@ -140,7 +140,7 @@
 							";
 						?>
 						<input type='hidden' name='id_zdjecia' id='id_zdjecia'>
-						<input type="file" name="files[]" multiple>
+						<input type="file" name="files[]" required multiple>
 						<br>
 						<button class="btn-add-form" name="submit_edytuj">Edytuj</button>
 					</form>

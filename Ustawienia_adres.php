@@ -15,6 +15,12 @@
 	{
 		$error = "Dodaj adres zamieszkania!";
 	}
+
+	if(isset($_POST['submit'])){
+		$sql_usun = "DELETE FROM accounts_address WHERE Id_klienta = $id_klienta";
+		mysqli_query($connect, $sql_usun);
+		header("Location: Ustawienia_adres.php");
+	}
 ?>
 <!DOCTYPE html>
 <html lang="pl">
@@ -128,6 +134,9 @@
 									<tr>
 										<td colspan="2">
 											<a href="Ustawienia_edytuj_zamieszkanie.php" class="btn">Edytuj dane</a><br>
+											<form method="POST">
+												<button class="btn" name="submit">Usuń adres</button>
+											</form>
 										</td>
 									</tr>
 									html;

@@ -68,9 +68,8 @@
 			<form action="" method="POST">
 			<h3>Edytowanie kategorii</h3>
             <?php 
-            	echo "<input type='text' name='nazwa' value='$row[Nazwa]'>"
+            	echo "<input type='text' name='nazwa' required value='$row[Nazwa]'>"
 			?>
-    		<input type="file" name="zdjecie" style="border: 2px solid black">
 			<input type="submit" name="submit" value="Edytuj produkt" class="form-btn">
 			<br>
 			<a href="Kategorie.php" class="btn">Powrót</a>

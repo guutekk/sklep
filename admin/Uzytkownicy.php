@@ -13,6 +13,11 @@
 		$id_klienta = $_POST['id_klienta'];
 		header("Location: Uzytkownicy_edytuj.php?id=$id_klienta");
 	}
+
+	if(isset($_POST['submit_sprawdz'])){
+		$id_klienta = $_POST['id_klienta'];
+		header("Location: Uzytkownik_info.php?id=$id_klienta");
+	}
 ?>
 <!DOCTYPE html>
 <html lang="pl">
@@ -100,10 +105,10 @@
                             <td>$row[Email]</td>
                             <td>$row[Telefon]</td>
                             <td>
-							<form method='POST'>
+							<form method='POST' action=''>
 								<input type='hidden' name='id_klienta' value='$row[Id_klienta]'>
 								<button name='submit_edycja' class='btn'>Edytuj</button>
-								<button name='submit_edycja_adres' class='btn'>Sprawdź</button>
+								<button name='submit_sprawdz' class='btn'>Sprawdź</button>
 							</form>
                             </td>
                         </tr>";
