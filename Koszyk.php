@@ -219,7 +219,10 @@ session_start();
                                 ."zł</td>
                             </tr>
                         </table>
-                        <a href='Koszyk,2.php?price=$cena_suma' class='btn'>Kupuję</a>
+                        <form method='POST' action='Koszyk_2.php'>
+                            <input type='hidden' name='suma' value='$cena_suma'>
+                            <button name='submit' class='btn'>Kupuję</button>
+                        </form>
                     </div>
                 ";
             }
