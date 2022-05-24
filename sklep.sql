@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 12 Maj 2022, 13:27
+-- Czas generowania: 24 Maj 2022, 12:38
 -- Wersja serwera: 10.4.24-MariaDB
 -- Wersja PHP: 7.3.16
 
@@ -64,13 +64,6 @@ CREATE TABLE `accounts_address` (
   `Id_klienta` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Zrzut danych tabeli `accounts_address`
---
-
-INSERT INTO `accounts_address` (`Id_adresu`, `Ulica`, `Nr_budynku`, `Kod_pocztowy`, `Miasto`, `Id_wojewodztwa`, `Id_klienta`) VALUES
-(7, 'Półrzeczki', '208', 34643, 'Jurków', 6, 1);
-
 -- --------------------------------------------------------
 
 --
@@ -90,14 +83,11 @@ CREATE TABLE `carts` (
 --
 
 INSERT INTO `carts` (`Id_koszyka`, `Id_produktu`, `Ilosc`, `Id_klienta`, `Status`) VALUES
-(1, 2, 1, 1, 0),
-(2, 1, 1, 1, 0),
-(3, 3, 1, 1, 0),
-(4, 4, 1, 1, 0),
-(5, 5, 1, 1, 0),
-(6, 25, 5, 1, 0),
-(7, 26, 2, 1, 0),
-(8, 27, 1, 1, 0);
+(3, 27, 1, 1, 0),
+(4, 29, 1, 1, 0),
+(5, 25, 1, 1, 0),
+(6, 28, 1, 1, 0),
+(7, 26, 1, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -116,7 +106,7 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`Id_kategorii`, `Nazwa`, `Zdjecie`) VALUES
-(1, 'V-DOLCE', 'images/'),
+(1, 'VDOLCE', 'images/'),
 (2, 'SKINY', 'images/'),
 (3, 'KARNETY', 'images/');
 
@@ -149,10 +139,10 @@ INSERT INTO `delivery_method` (`Id_dostawy`, `Nazwa`, `Cena`) VALUES
 --
 
 CREATE TABLE `images` (
-  `id` int(11) NOT NULL,
-  `file_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `Id_zdjecia` int(11) NOT NULL,
+  `Nazwa_pliku` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `uploaded_on` datetime NOT NULL,
-  `status` enum('1','0') COLLATE utf8_unicode_ci NOT NULL DEFAULT '1',
+  `typ` enum('1','0') COLLATE utf8_unicode_ci NOT NULL DEFAULT '1',
   `Id_produktu` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -160,12 +150,33 @@ CREATE TABLE `images` (
 -- Zrzut danych tabeli `images`
 --
 
-INSERT INTO `images` (`id`, `file_name`, `uploaded_on`, `status`, `Id_produktu`) VALUES
-(7, 'black_knight.png', '2022-05-12 09:35:34', '1', 25),
-(8, 'szafka_png.jpg', '2022-05-12 09:35:34', '1', 25),
-(9, 'vdolce.png', '2022-05-12 09:35:34', '1', 25),
-(11, 'vdolce.png', '2022-05-12 10:09:15', '1', 26),
-(12, 'pies.png', '2022-05-12 11:27:38', '1', 27);
+INSERT INTO `images` (`Id_zdjecia`, `Nazwa_pliku`, `uploaded_on`, `typ`, `Id_produktu`) VALUES
+(13, '2df2435abcaea00207d5c199e67ed903.jpg', '2022-05-18 11:24:32', '1', 29),
+(14, '1.jfif', '2022-05-18 11:24:47', '1', 0),
+(15, 'abd9220838520c132d329ed8a50d0289.jpg', '2022-05-18 11:24:47', '1', 0),
+(16, 'fa05e-16167982574169-800.jpg', '2022-05-18 11:24:47', '1', 0),
+(17, 'abd9220838520c132d329ed8a50d0289.jpg', '2022-05-18 11:30:17', '1', 0),
+(18, 'abd9220838520c132d329ed8a50d0289.jpg', '2022-05-18 11:30:41', '1', 0),
+(19, 'abd9220838520c132d329ed8a50d0289.jpg', '2022-05-18 11:31:35', '1', 0),
+(20, 'abd9220838520c132d329ed8a50d0289.jpg', '2022-05-18 11:32:16', '1', 0),
+(21, 'abd9220838520c132d329ed8a50d0289.jpg', '2022-05-18 11:32:59', '1', 0),
+(22, '4.jfif', '2022-05-18 11:33:28', '1', 0),
+(24, 'abd9220838520c132d329ed8a50d0289.jpg', '2022-05-18 11:36:47', '1', 30),
+(25, 'fa05e-16167982574169-800.jpg', '2022-05-18 11:36:47', '1', 30),
+(26, '2df2435abcaea00207d5c199e67ed903.jpg', '2022-05-18 11:38:27', '1', 31),
+(27, 'abd9220838520c132d329ed8a50d0289.jpg', '2022-05-18 11:38:27', '1', 31),
+(28, 'fa05e-16167982574169-800.jpg', '2022-05-18 11:38:27', '1', 31),
+(29, 'abd9220838520c132d329ed8a50d0289.jpg', '2022-05-18 11:43:02', '1', 31),
+(30, 'fa05e-16167982574169-800.jpg', '2022-05-18 11:44:47', '1', 28),
+(31, 'abd9220838520c132d329ed8a50d0289.jpg', '2022-05-18 11:46:18', '1', 28),
+(32, '2df2435abcaea00207d5c199e67ed903.jpg', '2022-05-18 11:46:25', '1', 28),
+(33, 'abd9220838520c132d329ed8a50d0289.jpg', '2022-05-18 11:46:41', '1', 26),
+(34, '18br-textile-social-4up-3840x2160-3840x2160-5bab52d5f838.jpg', '2022-05-18 12:46:02', '1', 25),
+(35, '2df2435abcaea00207d5c199e67ed903.jpg', '2022-05-18 12:05:07', '1', 25),
+(37, 'abd9220838520c132d329ed8a50d0289.jpg', '2022-05-18 12:49:04', '1', 25),
+(38, '18br-textile-social-4up-3840x2160-3840x2160-5bab52d5f838.jpg', '2022-05-18 13:06:15', '1', 27),
+(40, '18br-textile-social-4up-3840x2160-3840x2160-5bab52d5f838.jpg', '2022-05-18 13:09:49', '1', 29),
+(41, 'abd9220838520c132d329ed8a50d0289.jpg', '2022-05-18 13:09:49', '1', 29);
 
 -- --------------------------------------------------------
 
@@ -194,8 +205,14 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`Id_zamowienia`, `Id_klienta`, `Id_dostawy`, `Id_platnosci`, `Data_zamowienia`, `Cena`, `Ilosc`, `Ulica`, `Nr_budynku`, `Kod_pocztowy`, `Miasto`, `Id_wojewodztwa`, `Id_statusu`) VALUES
-(5, 1, 1, 1, '2022-05-12', 21, 0, 'Półrzeczki', '208', 34643, 'Jurków', 6, 0),
-(6, 1, 1, 1, '2022-05-12', 21, 0, 'Półrzeczki', '208', 34643, 'Jurków', 6, 0);
+(1, 1, 1, 1, '2022-05-19', 234, 0, 'dawd', 'awd', 0, 'awd', 6, 0),
+(2, 1, 2, 2, '2022-05-19', 230, 0, 'adas12', 'sd123', 123123, 'asd', 6, 0),
+(3, 1, 1, 1, '2022-05-20', 22, 0, 'awd', 'awd', 0, 'awd', 6, 0),
+(4, 1, 0, 0, '2022-05-20', 0, 0, '', '', 0, '', 0, 0),
+(5, 1, 0, 0, '2022-05-20', 0, 0, '', '', 0, '', 0, 0),
+(6, 1, 0, 0, '2022-05-20', 0, 0, '', '', 0, '', 0, 0),
+(7, 1, 0, 0, '2022-05-20', 0, 0, '', '', 0, '', 0, 0),
+(8, 1, 0, 0, '2022-05-20', 0, 0, '', '', 0, '', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -252,7 +269,9 @@ CREATE TABLE `products` (
 INSERT INTO `products` (`Id_produktu`, `Nazwa`, `Opis`, `Id_kategorii`, `Cena`, `Ilosc`) VALUES
 (25, '1000 VDOLCY', 'Po zakupie tego przedmiotu zostanie dodane 1000 Vdolcy do twojego konta fortnite', '1', 20, 5),
 (26, 'Vdolce 5000', 'awdawdawdawdawd', '1', 24, 2),
-(27, 'test', 'test', '2', 1, 1);
+(27, 'test', 'test', '2', 1, 1),
+(28, 'skin debil', 'to jest debil', '2', 123, 1),
+(29, 'test', 'test', '2', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -325,7 +344,7 @@ ALTER TABLE `delivery_method`
 -- Indeksy dla tabeli `images`
 --
 ALTER TABLE `images`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`Id_zdjecia`);
 
 --
 -- Indeksy dla tabeli `orders`
@@ -365,13 +384,13 @@ ALTER TABLE `accounts`
 -- AUTO_INCREMENT dla tabeli `accounts_address`
 --
 ALTER TABLE `accounts_address`
-  MODIFY `Id_adresu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `Id_adresu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT dla tabeli `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `Id_koszyka` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `Id_koszyka` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT dla tabeli `categories`
@@ -389,13 +408,13 @@ ALTER TABLE `delivery_method`
 -- AUTO_INCREMENT dla tabeli `images`
 --
 ALTER TABLE `images`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `Id_zdjecia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT dla tabeli `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `Id_zamowienia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `Id_zamowienia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT dla tabeli `payments`
@@ -407,7 +426,7 @@ ALTER TABLE `payments`
 -- AUTO_INCREMENT dla tabeli `products`
 --
 ALTER TABLE `products`
-  MODIFY `Id_produktu` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `Id_produktu` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT dla tabeli `provinces`
