@@ -7,15 +7,44 @@
     $id_klienta = $_SESSION['id'];
     $connect=new mysqli('localhost', 'root', '', 'sklep');
 
-    $sql = "SELECT *, o.Cena as Cena_zamowienia , d.Nazwa as Nazwa_dostawa, d.Cena as Cena_dostawa, p.Nazwa as Nazwa_platnosc, p.Cena as Cena_platnosc FROM orders o JOIN delivery_method d USING(Id_dostawy) JOIN payments p USING(Id_platnosci) WHERE Id_klienta=$id_klienta AND Id_Statusu=0";
-    $result = mysqli_query($connect, $sql);
-    $row = mysqli_fetch_assoc($result);
+    $sql_koszyk = "SELECT c.Ilosc, c.Id_klienta,c.Id_produktu, p.Nazwa, p.Cena FROM carts c JOIN products p USING(Id_produktu) WHERE c.Id_klienta = $id_klienta AND c.Status = 0";
+    $result_koszyk = mysqli_query($connect, $sql_koszyk);
 
-
-    if(isset($_POST['submit']))
+    $cena_suma = 0;
+    for($i=0; $i<mysqli_num_rows($result_koszyk); $i++)
     {
-        header("Location: cos.php");
+        $row = mysqli_fetch_assoc($result_koszyk);
+        $ilosc = $row['Ilosc'];
+        $cena = $row['Cena'];
+
+        if($ilosc>1)
+        {
+            $cena*=$ilosc;
+        }
+
+        $cena_suma+=$cena;
     }
+
+
+    $id_dostawy = $_POST['radio_dostawa'];
+    $id_platnosci = $_POST['radio_platnosc'];
+
+    $sql_dostawa = "SELECT * FROM delivery_method WHERE Id_dostawy = $id_dostawy";
+    $result_dostawa = mysqli_query($connect, $sql_dostawa);
+    $row_dostawa = mysqli_fetch_assoc($result_dostawa);
+
+    $sql_platnosc = "SELECT * FROM payments WHERE Id_platnosci = $id_platnosci";
+    $result_platnosc = mysqli_query($connect, $sql_platnosc);
+    $row_platnosc = mysqli_fetch_assoc($result_platnosc);
+
+    $ulica = $_POST['ulica'];
+    $nr_budynku = $_POST['nr_budynku'];
+    $kod_pocztowy = $_POST['kod_pocztowy'];
+    $miasto = $_POST['miasto'];
+    
+    $id_wojewodztwa = $_POST['wojewodztwo'];
+
+    $suma = $cena_suma + $row_dostawa['Cena'] + $row_platnosc['Cena'];
 ?>
 <title>Bigibongo Shop</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"> 
@@ -85,7 +114,7 @@
 			</nav>
  		</div>
          
-         <form method="POST">
+         <form method="POST" action='Zamowienie.php'>
          <div class="container">
                 <div class="row">
                     <div class="col-md-6">
@@ -97,7 +126,7 @@
                                 </td>
                                 <td>
                                     <?php
-                                        echo $row['Nazwa_dostawa'];
+                                        echo $row_dostawa['Nazwa'];
                                     ?>
                                 </td>
                             </tr>
@@ -117,7 +146,7 @@
                                 </td>
                                 <td>
                                     <?php
-                                        echo $row['Ulica']." ".$row['Nr_budynku'];
+                                        echo $ulica." ".$nr_budynku;
                                     ?>
                                 </td>
                             </tr>
@@ -127,7 +156,7 @@
                                 </td>
                                 <td>
                                 <?php
-                                        echo $row['Kod_pocztowy']." ".$row['Miasto'];
+                                        echo $kod_pocztowy." ".$miasto;
                                     ?>
                                 </td>
                             </tr> 
@@ -159,12 +188,12 @@
                             <tr>
                                 <td>
                                     <?php
-                                        echo $row['Nazwa_platnosc'];
+                                        echo $row_platnosc['Nazwa'];
                                     ?>
                                 </td>
                                 <td>
                                     <?php
-                                        echo $row['Cena_platnosc'].",00zł";
+                                        echo $row_platnosc['Cena'].",00zł";
                                     ?>
                                 </td>
                             </tr>
@@ -174,7 +203,7 @@
                                 </td>
                                 <td>
                                     <?php
-                                        echo $row['Cena_dostawa'].",00zł";
+                                        echo $row_dostawa['Cena'].",00zł";
                                     ?>
                                 </td>
                             </tr>
@@ -182,7 +211,9 @@
                                     Brutto
                                 </td>
                                 <td>
-                                    
+                                    <?php
+                                        echo $cena_suma.",00zł";
+                                    ?>
                                 </td>
                             <tr>
                                 <td>
@@ -190,19 +221,18 @@
                                 </td>
                                 <td>
                                     <?php
-                                        echo $row['Cena_zamowienia'].",00zł";
+                                        echo $suma.",00zł";
                                     ?>
                                 </td>
                             </tr>
                         </table>
-                        
                     </div>
-                    <form method="POST">
-                        <button name='submit' class='btn'>Zamawiam i płacę</button>
-                    </form>
+                    <button class='btn'>Zamawiam i płacę</button>
                 </div>
             </div>
          </form>
+
+
     </section>
     <footer>
 			<hr>
@@ -217,5 +247,6 @@
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 	<script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+    <script src="js/koszyk_script.js"></script>
 </body>
 </html>

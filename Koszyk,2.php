@@ -4,6 +4,8 @@
         header("Location: Logowanie.php ");
     }
 
+
+    $cena = $_POST['cena'];
     $id_klienta = $_SESSION['id'];
     $connect=new mysqli('localhost', 'root', '', 'sklep');
 
@@ -12,29 +14,6 @@
     if(mysqli_num_rows($result)<1){
         header("Location: Koszyk.php");
     }
-    
-
-    $sql_adres="SELECT * FROM accounts_address WHERE Id_klienta = $id_klienta";
-    $result_adres=mysqli_query($connect, $sql_adres);
-    $row_adres=mysqli_fetch_assoc($result_adres);
-
-    if(mysqli_num_rows($result_adres)<1)
-	{
-		$ulica_form = "";
-        $budynek_form = "";
-        $pocztowy_form ="";
-        $miasto_form="";
-	}else
-    {
-        $wojewodztwo = $row_adres['Id_wojewodztwa'];
-    
-        $sql_wojewodztwo_1 = "SELECT * FROM provinces WHERE Id_wojewodztwa = $wojewodztwo";
-        $result_wojewodztwo_1 = mysqli_query($connect, $sql_wojewodztwo_1);
-        $row_wojewodztwo = mysqli_fetch_assoc($result_wojewodztwo_1);
-    
-        $sql_wojewodztwo_2 = "SELECT * FROM provinces WHERE Id_wojewodztwa != $wojewodztwo";
-        $result_wojewodztwo_2 = mysqli_query($connect, $sql_wojewodztwo_2);
-    }
 
     $sql_dostawa ="SELECT * FROM delivery_method";
     $result_dostawa = mysqli_query($connect, $sql_dostawa);
@@ -42,31 +21,59 @@
     $sql_platnosc="SELECT * FROM payments";
     $result_platnosc = mysqli_query($connect, $sql_platnosc);
 
-    if(isset($_POST['submit'])){
+    $sql_adres = "SELECT * FROM accounts_address WHERE Id_klienta = $id_klienta";
+    $result_adres = mysqli_query($connect, $sql_adres);
+    $row_adres = mysqli_fetch_assoc($result_adres);
 
-        $id_dostawy = $_POST['radio_dostawa'];
-        $id_platnosci = $_POST['radio_platnosc'];
-        $ulica = $_POST['ulica'];
-        $nr_budynku = $_POST['nr_budynku'];
-        $kod_pocztowy = $_POST['kod_pocztowy'];
-        $miasto = $_POST['miasto'];
-        $wojewodztwo = $_POST['wojewodztwo'];
-        $data = date("Y-m-d");
+    if(mysqli_num_rows($result_adres)<1){
+        $row_ulica = '';
+        $row_budynek = '';
+        $row_pocztowy = '';
+        $row_miasto = '';
 
-        $sql_dostawa_cena = "SELECT * FROM delivery_method WHERE Id_dostawy = $id_dostawy";
-        $result_dostawa_cena = mysqli_query($connect, $sql_dostawa_cena);
-        $row_dostawa = mysqli_fetch_assoc($result_dostawa_cena);
+        $sql_wojewodztwo = "SELECT * FROM provinces";
+        $result_woj = mysqli_query($connect, $sql_wojewodztwo);
 
-        $sql_platnosc_cena = "SELECT * FROM payments WHERE Id_platnosci = $id_platnosci";
-        $result_platnosc_cena = mysqli_query($connect, $sql_platnosc_cena);
-        $row_platnosc = mysqli_fetch_assoc($result_platnosc_cena);
+    }else{
+        $row_ulica = $row_adres['Ulica'];
+        $row_budynek = $row_adres['Nr_budynku'];
+        $row_pocztowy = $row_adres['Kod_pocztowy'];
+        $row_miasto = $row_adres['Miasto'];
+        $id_wojewodztwa = $row_adres['Id_wojewodztwa'];
 
-        $cena = $_GET['price'] + $row_dostawa['Cena'] + $row_platnosc['Cena'];
+        $sql_wojewodztwo = "SELECT * FROM provinces WHERE Id_wojewodztwa = $id_wojewodztwa";
+        $result_woje = mysqli_query($connect, $sql_wojewodztwo);
+        $row_woj = mysqli_fetch_assoc($result_woje);
 
-        $sql_insert = "INSERT INTO orderS(Id_klienta, Id_dostawy, Id_platnosci, Data_zamowienia, Cena, Ulica, Nr_budynku, Kod_pocztowy, Miasto, Id_wojewodztwa,Id_statusu) VALUES ('$id_klienta','$id_dostawy','$id_platnosci','$data','$cena','$ulica','$nr_budynku','$kod_pocztowy','$miasto','$wojewodztwo', '0')";
-        mysqli_query($connect, $sql_insert);
-        header("Location: Koszyk,3.php");
+        $sql_wojewodztwo_pozostale = "SELECT * FROM provinces WHERE Id_wojewodztwa != $id_wojewodztwa";
+        $result_woj_pozostale = mysqli_query($connect, $sql_wojewodztwo_pozostale);
     }
+
+    // if(isset($_POST['submit'])){
+
+    //     $id_dostawy = $_POST['radio_dostawa'];
+    //     $id_platnosci = $_POST['radio_platnosc'];
+    //     $ulica = $_POST['ulica'];
+    //     $nr_budynku = $_POST['nr_budynku'];
+    //     $kod_pocztowy = $_POST['kod_pocztowy'];
+    //     $miasto = $_POST['miasto'];
+    //     $wojewodztwo = $_POST['wojewodztwo'];
+    //     $data = date("Y-m-d");
+
+    //     $sql_dostawa_cena = "SELECT * FROM delivery_method WHERE Id_dostawy = $id_dostawy";
+    //     $result_dostawa_cena = mysqli_query($connect, $sql_dostawa_cena);
+    //     $row_dostawa = mysqli_fetch_assoc($result_dostawa_cena);
+
+    //     $sql_platnosc_cena = "SELECT * FROM payments WHERE Id_platnosci = $id_platnosci";
+    //     $result_platnosc_cena = mysqli_query($connect, $sql_platnosc_cena);
+    //     $row_platnosc = mysqli_fetch_assoc($result_platnosc_cena);
+
+    //     $cena = $_GET['price'] + $row_dostawa['Cena'] + $row_platnosc['Cena'];
+
+    //     // $sql_insert = "INSERT INTO orderS(Id_klienta, Id_dostawy, Id_platnosci, Data_zamowienia, Cena, Ulica, Nr_budynku, Kod_pocztowy, Miasto, Id_wojewodztwa,Id_statusu) VALUES ('$id_klienta','$id_dostawy','$id_platnosci','$data','$cena','$ulica','$nr_budynku','$kod_pocztowy','$miasto','$wojewodztwo', '0')";
+    //     // mysqli_query($connect, $sql_insert);
+    //     header("Location: Koszyk,3.php");
+    // }
 ?>
 <title>Bigibongo Shop</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -136,7 +143,7 @@
 			</nav>
  		</div>
          
-         <form method="POST">
+         <form method="POST" action='Koszyk,3.php'>
             <div class="row">
                 <div class="col-sm-6">
                     <h3>Przesyłka:</h3>
@@ -199,66 +206,70 @@
                     <table> 
                         <tr>
                             <?php
-								if(isset($error))
-								{
-									echo"
-									<td>
-										<a href='Ustawienia_dodaj_zamieszkanie.php' class='btn'>Dodaj dane adresowe</a><br>							
-									</td>
-									</tr>";
-								}else{
-                                    echo"
-                                        <tr>
+                                echo<<<html
+                                    <tr>
+                                    <td>
+                                        Ulica
+                                    </td>
+                                    <td>
+                                        <input type='text' name='ulica' required value='$row_ulica'>
+                                    </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Nr. budynku</td>
                                         <td>
-                                            Ulica
+                                    
+                                            <input type='text' name='nr_budynku' required value='$row_budynek'>
+                                        
                                         </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Kod pocztowy</td>
                                         <td>
-                                            <input type='text' name='ulica' required value='$ulica_form'>
-                                        </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Nr. budynku</td>
-                                            <td>
+                                    
+                                        <input type='text' name='kod_pocztowy' required value='$row_pocztowy'>
                                         
-                                                <input type='text' name='nr_budynku' required value='$budynek_form'>
-                                            
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Kod pocztowy</td>
-                                            <td>
-                                        
-                                            <input type='text' name='kod_pocztowy' required value='$pocztowy_form'>
-                                            
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Miasto</td>
-                                            <td>
-                                                <input type='text' name='miasto' required value='$miasto_form'>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Wojewodztwo</td>
-                                            <td>
-                                            <select name='wojewodztwo' required>
-                                                        <option value='$row_wojewodztwo[Id_wojewodztwa]'>$row_wojewodztwo[Nazwa]</option>
-                                                        ";
-                                                        for($i=0; $i<mysqli_num_rows($result_wojewodztwo_2); $i++)
-                                                        {
-                                                            $row_wojewodztwo = mysqli_fetch_assoc($result_wojewodztwo_2);
-                                                            echo"<option value='$row_wojewodztwo[Id_wojewodztwa]'>$row_wojewodztwo[Nazwa]</option>";
-                                                        }
-                                                        echo"
-                                                </select>
-                                            </select>
                                         </td>
-                                    </tr>";
-                                }
+                                    </tr>
+                                    <tr>
+                                        <td>Miasto</td>
+                                        <td>
+                                            <input type='text' name='miasto' required value='$row_miasto'>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Wojewodztwo</td>
+                                        <td>
+                                        <select name='wojewodztwo' required>
+                                html;
+                                    if(mysqli_num_rows($result_adres)<1){
+                                        for($i=0; $i<mysqli_num_rows($result_woj); $i++){
+                                            $row = mysqli_fetch_assoc($result_woj);
+                                            echo<<<html
+                                            <option value='$row[Id_wojewodztwa]'>$row[Nazwa]</option>
+                                            html;
+                                        }
+                                    }else{
+                                        echo<<<html
+                                        <option value='$row_woj[Id_wojewodztwa]'>$row_woj[Nazwa]</option>
+                                        html;
 
+                                        for($i=0; $i<mysqli_num_rows($result_woj_pozostale); $i++){
+                                            $row = mysqli_fetch_assoc($result_woj_pozostale);
+                                            echo<<<html
+                                            <option value='$row[Id_wojewodztwa]'>$row[Nazwa]</option>
+                                            html;
+                                        }
+                                    }
+                                echo<<<html
+                                        </select>
+                                    </td>
+                                </tr>
+                                <input type='hidden' name='cena' value='$cena'>
+                                html;
                             ?>
                     </table>
-                    <button name='submit' class="btn_next">Dalej</button>
+                    <button class="btn_next">Dalej</button>
                 </div>
             </div>
          </form>

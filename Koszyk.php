@@ -219,9 +219,9 @@ session_start();
                                 ."zł</td>
                             </tr>
                         </table>
-                        <form method='POST' action='Koszyk_2.php'>
-                            <input type='hidden' name='suma' value='$cena_suma'>
-                            <button name='submit' class='btn'>Kupuję</button>
+                        <form method='POST' action='Koszyk,2.php'>
+                            <input type='hidden' name='cena' value='$cena_suma'>
+                            <button class='btn'>Kupuję</button>
                         </form>
                     </div>
                 ";
