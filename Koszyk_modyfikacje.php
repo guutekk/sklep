@@ -26,21 +26,21 @@
         {
             if($ilosc<=$ilosc_baza)
             {
-                $sql = "UPDATE carts SET Ilosc='$ilosc' WHERE Id_produktu=$id_produktu AND Id_klienta = $id_klienta";
+                $sql = "UPDATE carts SET Ilosc='$ilosc' WHERE Id_produktu=$id_produktu AND Id_klienta = $id_klienta AND 'Status' = 0";
                 mysqli_query($connect, $sql);
             }else if($ilosc>$ilosc_baza)
             {
-                $sql = "UPDATE carts SET Ilosc='$ilosc_baza' WHERE Id_produktu=$id_produktu AND Id_klienta = $id_klienta";
+                $sql = "UPDATE carts SET Ilosc='$ilosc_baza' WHERE Id_produktu=$id_produktu AND Id_klienta = $id_klienta AND 'Status' = 0";
                 mysqli_query($connect, $sql);
             }
         }else
         {
             if($ilosc_get>1)
             {
-                $sql = "INSERT INTO carts(Id_produktu, Ilosc, Id_klienta) VALUES ('$id_produktu','$ilosc_get','$id_klienta')";
+                $sql = "INSERT INTO carts(Id_produktu, Ilosc, Id_klienta, 'Status') VALUES ('$id_produktu','$ilosc_get','$id_klienta','0')";
                 mysqli_query($connect, $sql);
             }else{
-                $sql = "INSERT INTO carts(Id_produktu, Ilosc, Id_klienta) VALUES ('$id_produktu','1','$id_klienta')";
+                $sql = "INSERT INTO carts(Id_produktu, Ilosc, Id_klienta, 'Status') VALUES ('$id_produktu','1','$id_klienta','0')";
                 mysqli_query($connect, $sql);
             }
         }

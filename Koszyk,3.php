@@ -45,6 +45,22 @@
     $id_wojewodztwa = $_POST['wojewodztwo'];
 
     $suma = $cena_suma + $row_dostawa['Cena'] + $row_platnosc['Cena'];
+
+
+    if(isset($_POST['submit_order'])){
+        $data = date("Y-m-d");
+        $nr_zamowienia = rand(10000, 99999);
+
+
+        $sql_insert = "INSERT INTO orders (Id_klienta, Id_dostawy, Id_platnosci, Data_zamowienia, Cena, Ulica, Nr_budynku, Kod_pocztowy, Miasto, Id_wojewodztwa,Id_statusu, Nr_zamowienia) 
+        VALUES ('$id_klienta','$id_dostawy','$id_platnosci','$data','$suma','$ulica','$nr_budynku','$kod_pocztowy','$miasto','$id_wojewodztwa', '1', '$nr_zamowienia')";
+        mysqli_query($connect, $sql_insert);
+
+        $sql_cart = "UPDATE carts SET 'Status'=1 WHERE 'Status' = 0 AND Id_klienta = $id_klienta";
+        mysqli_query($connect, $sql_cart);
+
+        header("Location: Zamowienie.php/$nr_zamowienia");
+     }
 ?>
 <title>Bigibongo Shop</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"> 
@@ -114,7 +130,7 @@
 			</nav>
  		</div>
          
-         <form method="POST" action='Zamowienie.php'>
+         <form method="POST">
          <div class="container">
                 <div class="row">
                     <div class="col-md-6">
@@ -227,7 +243,7 @@
                             </tr>
                         </table>
                     </div>
-                    <button class='btn'>Zamawiam i płacę</button>
+                    <button class='btn' name='submit_order'>Zamawiam i płacę</button>
                 </div>
             </div>
          </form>

@@ -9,7 +9,7 @@ session_start();
 
     $id_klienta = $_SESSION['id'];
     $sql = "SELECT c.Ilosc, c.Id_klienta,c.Id_produktu, p.Nazwa, p.Cena FROM carts c JOIN products p USING(Id_produktu) WHERE c.Id_klienta = $id_klienta AND c.Status = 0";
-    $result = mysqli_query($connect, $sql);    
+    echo $result = mysqli_query($connect, $sql);    
 
     if(mysqli_num_rows($result)>0){
     }else{

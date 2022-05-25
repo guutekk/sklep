@@ -1,8 +1,6 @@
 <?php
     session_start();
 
-    $nr_zamowienia = rand(10000, 99999);
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
