@@ -61,7 +61,7 @@
         VALUES ('$id_klienta','$id_dostawy','$id_platnosci','$data','$suma','$ulica','$nr_budynku','$kod_pocztowy','$miasto','$id_wojewodztwa', '1', '$nr_zamowienia')";
         mysqli_query($connect, $sql_insert);
 
-        $sql_cart = "UPDATE carts SET `Status`=1 , Nr_zamowienia = $nr_zamowienia WHERE `Status` = 0 AND Id_klienta = $id_klienta AND Nr_zamowienia !=0";
+        $sql_cart = "UPDATE carts SET `Status`=1 , Nr_zamowienia = $nr_zamowienia WHERE `Status` = 0 AND Id_klienta = $id_klienta AND Nr_zamowienia =0";
         mysqli_query($connect, $sql_cart);
 
         header("Location: Zamowienie.php");

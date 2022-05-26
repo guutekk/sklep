@@ -8,10 +8,10 @@ session_start();
     }
 
     $id_klienta = $_SESSION['id'];
-    $sql = "SELECT * FROM orders WHERE Id_klienta = $id_klienta";
-    $result = mysqli_query($connect, $sql);    
+    $sql_zamowienie = "SELECT * FROM orders WHERE Id_klienta = $id_klienta";
+    $result_zamowienie = mysqli_query($connect, $sql_zamowienie);    
 
-    if(mysqli_num_rows($result)>0){
+    if(mysqli_num_rows($result_zamowienie)>0){
     }else{
         $error[]= "Brak zamówień! Jeszcze nigdy nic u nas nie zamówiłeś.";
     }
@@ -84,7 +84,92 @@ session_start();
         <div class="cart-container">
             <h1>Twoje zamówienia</h1>
             <br>
-            
+            <table>
+                <?php
+                    if(isset($error)){
+                        foreach($error as $error)
+                        {
+                            echo"
+                                <tr>
+                                    <td>
+                                        <h2>".$error."</h2>
+                                    </td>
+                                </tr>
+                            ";
+                        }
+                    }else{
+                        echo<<<html
+                        <tr>
+                                <td>
+                                    Numer zamówienia
+                                </td>
+                                <td>
+                                    Kwota
+                                </td>
+                                <td>
+                                    Płatność
+                                </td>
+                                <td>
+                                    Dostawa
+                                </td>
+                                <td>
+                                    Data
+                                </td>
+                                <td>
+                                    Status
+                                </td>
+                                <td>
+                                    Szczegóły
+                                </td>
+                            </tr>
+                            <tr>
+                        html;
+                        for($i=0; $i<mysqli_num_rows($result_zamowienie); $i++)
+                        {
+                            $row_zamowienie = mysqli_fetch_assoc($result_zamowienie);
+
+                            $sql_platnosc = "SELECT * FROM payments WHERE Id_platnosci = $row_zamowienie[Id_platnosci]";
+                            $result_platnosc = mysqli_query($connect, $sql_platnosc);
+                            $row_platnosc = mysqli_fetch_assoc($result_platnosc);
+
+                            $sql_dostawa = "SELECT * FROM delivery_method WHERE Id_dostawy = $row_zamowienie[Id_dostawy]";
+                            $result_dostawa = mysqli_query($connect, $sql_dostawa);
+                            $row_dostawa = mysqli_fetch_assoc($result_dostawa);
+
+                            $sql_status = "SELECT * FROM orders_status WHERE Id_statusu = $row_zamowienie[Id_statusu]";
+                            $result_status = mysqli_query($connect, $sql_status);
+                            $row_status = mysqli_fetch_assoc($result_status);
+
+                            echo<<<html
+                                <td>
+                                    $row_zamowienie[Nr_zamowienia]
+                                </td>
+                                <td>
+                                    $row_zamowienie[Cena]
+                                </td>
+                                <td>
+                                    $row_platnosc[Nazwa]
+                                </td>
+                                <td>
+                                    $row_dostawa[Nazwa]
+                                </td>
+                                <td>
+                                    $row_zamowienie[Data_zamowienia]
+                                </td>
+                                <td>
+                                    $row_status[Nazwa]
+                                </td>
+                                <td>
+                                    <form>
+                                        <button class='btn'>Zobacz</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            html;
+                        }
+                    }
+                ?>
+            </table>
         </div>
     </section>
 
