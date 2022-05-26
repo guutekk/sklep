@@ -1,6 +1,19 @@
 <?php
     session_start();
 
+    $id_klienta = $_SESSION['id'];
+
+    $connect=new mysqli('localhost', 'root', '', 'sklep');
+
+    $sql = "SELECT * FROM orders WHERE Id_klienta = $id_klienta ORDER BY Id_zamowienia DESC";
+    $result = mysqli_query($connect, $sql);
+    $row = mysqli_fetch_assoc($result);
+
+    $nr_zamowienia = $row['Nr_zamowienia'];
+
+    header("Refresh:7; url=Index.php");
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">

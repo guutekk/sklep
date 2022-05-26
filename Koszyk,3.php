@@ -41,7 +41,6 @@
     $nr_budynku = $_POST['nr_budynku'];
     $kod_pocztowy = $_POST['kod_pocztowy'];
     $miasto = $_POST['miasto'];
-    
     $id_wojewodztwa = $_POST['wojewodztwo'];
 
     $suma = $cena_suma + $row_dostawa['Cena'] + $row_platnosc['Cena'];
@@ -50,16 +49,22 @@
     if(isset($_POST['submit_order'])){
         $data = date("Y-m-d");
         $nr_zamowienia = rand(10000, 99999);
-
+        $id_dostawy = $_POST['radio_dostawa'];
+        $id_platnosci = $_POST['radio_platnosc'];
+        $ulica = $_POST['ulica'];
+        $nr_budynku = $_POST['nr_budynku'];
+        $kod_pocztowy = $_POST['kod_pocztowy'];
+        $miasto = $_POST['miasto'];
+        $id_wojewodztwa = $_POST['wojewodztwo'];
 
         $sql_insert = "INSERT INTO orders (Id_klienta, Id_dostawy, Id_platnosci, Data_zamowienia, Cena, Ulica, Nr_budynku, Kod_pocztowy, Miasto, Id_wojewodztwa,Id_statusu, Nr_zamowienia) 
         VALUES ('$id_klienta','$id_dostawy','$id_platnosci','$data','$suma','$ulica','$nr_budynku','$kod_pocztowy','$miasto','$id_wojewodztwa', '1', '$nr_zamowienia')";
         mysqli_query($connect, $sql_insert);
 
-        $sql_cart = "UPDATE carts SET 'Status'=1 WHERE 'Status' = 0 AND Id_klienta = $id_klienta";
+        $sql_cart = "UPDATE carts SET `Status`=1 , Nr_zamowienia = $nr_zamowienia WHERE `Status` = 0 AND Id_klienta = $id_klienta AND Nr_zamowienia !=0";
         mysqli_query($connect, $sql_cart);
 
-        header("Location: Zamowienie.php/$nr_zamowienia");
+        header("Location: Zamowienie.php");
      }
 ?>
 <title>Bigibongo Shop</title>
@@ -131,6 +136,17 @@
  		</div>
          
          <form method="POST">
+        <?php
+            echo<<<html
+                <input type='hidden' name='ulica' value='$ulica'>
+                <input type='hidden' name='nr_budynku' value='$nr_budynku'>
+                <input type='hidden' name='kod_pocztowy' value='$kod_pocztowy'>
+                <input type='hidden' name='miasto' value='$miasto'>
+                <input type='hidden' name='wojewodztwo' value='$id_wojewodztwa'>
+                <input type='hidden' name='radio_platnosc' value='$id_platnosci'>
+                <input type='hidden' name='radio_dostawa' value='$id_dostawy'>
+            html;
+        ?>
          <div class="container">
                 <div class="row">
                     <div class="col-md-6">

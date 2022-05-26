@@ -8,7 +8,7 @@ session_start();
     }
 
     $id_klienta = $_SESSION['id'];
-    $sql = "SELECT * FROM orders o WHERE o.Id_klienta = $id_klienta";
+    $sql = "SELECT * FROM orders WHERE Id_klienta = $id_klienta";
     $result = mysqli_query($connect, $sql);    
 
     if(mysqli_num_rows($result)>0){
@@ -82,87 +82,10 @@ session_start();
 
     <section>
         <div class="cart-container">
-            <h1>Koszyk</h1>
+            <h1>Twoje zamówienia</h1>
             <br>
-            <table>
-                <?php
-                    if(isset($error)){
-                        foreach($error as $error)
-                        {
-                            echo"
-                                <tr>
-                                    <td>
-                                        <h2>".$error."</h2>
-                                    </td>
-                                </tr>
-                            ";
-                        }
-                    }else{
-                        for($i=0; $i<mysqli_num_rows($result); $i++)
-                        {
-                            $row = mysqli_fetch_assoc($result);
-                            echo"
-                                <tr> 
-                                    <td>
-                                        <a href='produkt.php?id=$row[Id_produktu]'>
-                                            <img src='images/aura.png'>
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <a href='produkt.php?id=$row[Id_produktu]'>
-                                            <h3>$row[Nazwa]</h3>
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <h3>
-                                            Ilość: 
-                                            <form method='POST'>
-                                                <button name='zmniejsz' class='btn-ammount'>-</button>
-                                                <input type='hidden' name='id_produktu' value='$row[Id_produktu]'>
-                                                <input type='number' readonly = 'enable' value='$row[Ilosc]'>
-                                                <button name='zwieksz' class='btn-ammount'>+</button>
-                                            </form>
-                                        </h3>
-                                    </td>
-                                    <td>
-                                        <h3>Cena: $row[Cena]zł</h3>
-                                    </td>
-                                    <td>
-                                        <td>
-                                            <form method='POST'>
-                                                <input type='hidden' name='id_produktu' value='$row[Id_produktu]'>
-                                                <button class='btn' name='submit'>Usuń z koszyka</button>
-                                            </form>
-                                        </td>
-                                    </td>
-                                </tr>
-                            ";
-                        }
-                    }
-                ?>
-            </table>
+            
         </div>
-
-        <?php
-            if(!isset($error))
-            {
-                echo"
-                    <div class='form-button'>
-                        <table>
-                            <tr>
-                                <td>
-                                    Suma:
-                                </td>
-                                <td>".
-                                    $cena_suma
-                                ."zł</td>
-                            </tr>
-                        </table>
-                        <a href='#' class='btn'>Kupuję</a>
-                    </div>
-                ";
-            }
-        ?>
     </section>
 
         <footer>
