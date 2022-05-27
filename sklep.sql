@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 24 Maj 2022, 12:38
+-- Czas generowania: 27 Maj 2022, 12:19
 -- Wersja serwera: 10.4.24-MariaDB
 -- Wersja PHP: 7.3.16
 
@@ -64,6 +64,13 @@ CREATE TABLE `accounts_address` (
   `Id_klienta` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Zrzut danych tabeli `accounts_address`
+--
+
+INSERT INTO `accounts_address` (`Id_adresu`, `Ulica`, `Nr_budynku`, `Kod_pocztowy`, `Miasto`, `Id_wojewodztwa`, `Id_klienta`) VALUES
+(15, 'Półrzeczki', '208', 34643, 'Jurków', 6, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -75,19 +82,19 @@ CREATE TABLE `carts` (
   `Id_produktu` int(11) NOT NULL,
   `Ilosc` int(11) NOT NULL,
   `Id_klienta` int(11) NOT NULL,
-  `Status` int(11) NOT NULL DEFAULT 0
+  `Status` int(11) NOT NULL DEFAULT 0,
+  `Nr_zamowienia` int(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
 --
 -- Zrzut danych tabeli `carts`
 --
 
-INSERT INTO `carts` (`Id_koszyka`, `Id_produktu`, `Ilosc`, `Id_klienta`, `Status`) VALUES
-(3, 27, 1, 1, 0),
-(4, 29, 1, 1, 0),
-(5, 25, 1, 1, 0),
-(6, 28, 1, 1, 0),
-(7, 26, 1, 1, 0);
+INSERT INTO `carts` (`Id_koszyka`, `Id_produktu`, `Ilosc`, `Id_klienta`, `Status`, `Nr_zamowienia`) VALUES
+(1, 26, 1, 1, 1, 48596),
+(2, 25, 1, 1, 1, 48596),
+(3, 26, 1, 1, 1, 52904),
+(4, 26, 1, 1, 1, 36217);
 
 -- --------------------------------------------------------
 
@@ -191,28 +198,23 @@ CREATE TABLE `orders` (
   `Id_platnosci` int(11) NOT NULL,
   `Data_zamowienia` date NOT NULL,
   `Cena` int(11) NOT NULL,
-  `Ilosc` int(11) NOT NULL,
   `Ulica` text NOT NULL,
   `Nr_budynku` text NOT NULL,
   `Kod_pocztowy` int(11) NOT NULL,
   `Miasto` text NOT NULL,
   `Id_wojewodztwa` int(11) NOT NULL,
-  `Id_statusu` int(11) NOT NULL
+  `Id_statusu` int(11) NOT NULL,
+  `Nr_zamowienia` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Zrzut danych tabeli `orders`
 --
 
-INSERT INTO `orders` (`Id_zamowienia`, `Id_klienta`, `Id_dostawy`, `Id_platnosci`, `Data_zamowienia`, `Cena`, `Ilosc`, `Ulica`, `Nr_budynku`, `Kod_pocztowy`, `Miasto`, `Id_wojewodztwa`, `Id_statusu`) VALUES
-(1, 1, 1, 1, '2022-05-19', 234, 0, 'dawd', 'awd', 0, 'awd', 6, 0),
-(2, 1, 2, 2, '2022-05-19', 230, 0, 'adas12', 'sd123', 123123, 'asd', 6, 0),
-(3, 1, 1, 1, '2022-05-20', 22, 0, 'awd', 'awd', 0, 'awd', 6, 0),
-(4, 1, 0, 0, '2022-05-20', 0, 0, '', '', 0, '', 0, 0),
-(5, 1, 0, 0, '2022-05-20', 0, 0, '', '', 0, '', 0, 0),
-(6, 1, 0, 0, '2022-05-20', 0, 0, '', '', 0, '', 0, 0),
-(7, 1, 0, 0, '2022-05-20', 0, 0, '', '', 0, '', 0, 0),
-(8, 1, 0, 0, '2022-05-20', 0, 0, '', '', 0, '', 0, 0);
+INSERT INTO `orders` (`Id_zamowienia`, `Id_klienta`, `Id_dostawy`, `Id_platnosci`, `Data_zamowienia`, `Cena`, `Ulica`, `Nr_budynku`, `Kod_pocztowy`, `Miasto`, `Id_wojewodztwa`, `Id_statusu`, `Nr_zamowienia`) VALUES
+(1, 1, 1, 1, '2022-05-26', 65, 'Półrzeczki', '208', 34643, 'Jurków', 6, 1, '48596'),
+(2, 1, 1, 1, '2022-05-26', 45, 'Półrzeczki', '208', 34643, 'Jurków', 6, 1, '52904'),
+(3, 1, 1, 1, '2022-05-26', 45, 'Półrzeczki', '208', 34643, 'Jurków', 6, 1, '36217');
 
 -- --------------------------------------------------------
 
@@ -222,8 +224,18 @@ INSERT INTO `orders` (`Id_zamowienia`, `Id_klienta`, `Id_dostawy`, `Id_platnosci
 
 CREATE TABLE `orders_status` (
   `Id_statusu` int(11) NOT NULL,
-  `Status` int(11) NOT NULL DEFAULT 0
+  `Nazwa` text NOT NULL DEFAULT '\'0\''
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Zrzut danych tabeli `orders_status`
+--
+
+INSERT INTO `orders_status` (`Id_statusu`, `Nazwa`) VALUES
+(1, 'Oczekiwanie'),
+(2, 'Przygotowane do wysyłki'),
+(3, 'Wysłane'),
+(4, 'Dostarczone');
 
 -- --------------------------------------------------------
 
@@ -353,6 +365,12 @@ ALTER TABLE `orders`
   ADD PRIMARY KEY (`Id_zamowienia`);
 
 --
+-- Indeksy dla tabeli `orders_status`
+--
+ALTER TABLE `orders_status`
+  ADD PRIMARY KEY (`Id_statusu`);
+
+--
 -- Indeksy dla tabeli `payments`
 --
 ALTER TABLE `payments`
@@ -384,13 +402,13 @@ ALTER TABLE `accounts`
 -- AUTO_INCREMENT dla tabeli `accounts_address`
 --
 ALTER TABLE `accounts_address`
-  MODIFY `Id_adresu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `Id_adresu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT dla tabeli `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `Id_koszyka` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `Id_koszyka` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT dla tabeli `categories`
@@ -414,7 +432,13 @@ ALTER TABLE `images`
 -- AUTO_INCREMENT dla tabeli `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `Id_zamowienia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `Id_zamowienia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT dla tabeli `orders_status`
+--
+ALTER TABLE `orders_status`
+  MODIFY `Id_statusu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT dla tabeli `payments`
