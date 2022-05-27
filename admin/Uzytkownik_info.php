@@ -5,6 +5,7 @@
 		header('Location: ../index.php');
 	}
 	
+    $id_klienta = $_GET['id'];
 	$connect=new mysqli('localhost', 'root', '', 'sklep');
 
     $sql = "SELECT * FROM accounts WHERE Id_klienta = $_GET[id]";
@@ -23,12 +24,10 @@
         $row_woj = mysqli_fetch_assoc($result_woj);
     }
 
+    $sql_zamowienie = "SELECT * FROM orders WHERE Id_klienta = $id_klienta";
+    $result_zamowienie = mysqli_query($connect, $sql_zamowienie);  
 
-    $sql_zam = "SELECT * FROM orders WHERE Id_klienta =$_GET[id]";
-    $result_zam = mysqli_query($connect, $sql_zam);
-    $row_zam = mysqli_fetch_assoc($result_zam);
-
-    if(mysqli_num_rows($result_zam)<1){
+    if(mysqli_num_rows($result_zamowienie)<1){
         $error1[]="Ten użytkownik jeszcze nic nie zamówił!";
     }else{
         
@@ -205,6 +204,7 @@
     </h2>
         <div class="row">
             <div class="col-xs-12">
+                <table>
                 <?php
                     if(isset($error1)){
                         foreach($error1  as $error1){
@@ -212,29 +212,77 @@
                         }
                     }else{
                         echo<<<html
-                        <table>
                         <tr>
-                            <td>Dostawa</td>
-                            <td>Płatność</td>
-                            <td>Data zamówienia</td>
-                            <td>Cena</td>
-                            <td>Ilość</td>
-                            <td>Status</td>
-                            <td>Zarządzaj</td>
-                        </tr>
-                        <tr>
-                            <td>Dostawa</td>
-                            <td>Płatność</td>
-                            <td>Data zamówienia</td>
-                            <td>Cena</td>
-                            <td>Ilość</td>
-                            <td>Status</td>
-                            <td>Zarządzaj</td>
-                        </tr>
-                        </table>
+                                <td>
+                                    Numer zamówienia
+                                </td>
+                                <td>
+                                    Kwota
+                                </td>
+                                <td>
+                                    Płatność
+                                </td>
+                                <td>
+                                    Dostawa
+                                </td>
+                                <td>
+                                    Data
+                                </td>
+                                <td>
+                                    Status
+                                </td>
+                                <td>
+                                    Szczegóły
+                                </td>
+                            </tr>
+                            <tr>
                         html;
+                        for($i=0; $i<mysqli_num_rows($result_zamowienie); $i++)
+                        {
+                            $row_zamowienie = mysqli_fetch_assoc($result_zamowienie);
+
+                            $sql_platnosc = "SELECT * FROM payments WHERE Id_platnosci = $row_zamowienie[Id_platnosci]";
+                            $result_platnosc = mysqli_query($connect, $sql_platnosc);
+                            $row_platnosc = mysqli_fetch_assoc($result_platnosc);
+
+                            $sql_dostawa = "SELECT * FROM delivery_method WHERE Id_dostawy = $row_zamowienie[Id_dostawy]";
+                            $result_dostawa = mysqli_query($connect, $sql_dostawa);
+                            $row_dostawa = mysqli_fetch_assoc($result_dostawa);
+
+                            $sql_status = "SELECT * FROM orders_status WHERE Id_statusu = $row_zamowienie[Id_statusu]";
+                            $result_status = mysqli_query($connect, $sql_status);
+                            $row_status = mysqli_fetch_assoc($result_status);
+
+                            echo<<<html
+                                <td>
+                                    $row_zamowienie[Nr_zamowienia]
+                                </td>
+                                <td>
+                                    $row_zamowienie[Cena]
+                                </td>
+                                <td>
+                                    $row_platnosc[Nazwa]
+                                </td>
+                                <td>
+                                    $row_dostawa[Nazwa]
+                                </td>
+                                <td>
+                                    $row_zamowienie[Data_zamowienia]
+                                </td>
+                                <td>
+                                    $row_status[Nazwa]
+                                </td>
+                                <td>
+                                    <form>
+                                        <button class='btn'>Zobacz</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            html;
+                        }
                     }
                 ?>
+                </table>
             </div>
         </div>
     </div>

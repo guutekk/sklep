@@ -90,30 +90,20 @@ nav ul {
     margin: 0;
     padding: 0;
 }
-
 section{
-    padding: 1rem 20%;
+    padding: 0,1rem 20%;
+}
+.cart-container{
+    padding: 10vh;
 }
 
-.btn{
-    margin-top: 1rem;
-    display: inline-block;
-    font-size: 20px;
-    color: #fff;
-    background: black;
-    border-radius: 20px;
-    cursor: pointer;
-    padding: .5rem 2rem;
-    border: 3px solid black;
-    transition-duration: 0.4s;
-  }
-  
-  .btn:hover{
-    background: white;
-    color: black;
-    border: 3px solid black;
-  }
-  .cart-container table {
+.cart-container h1{
+    font-size: 30px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.cart-container table {
     border-collapse: collapse;
     width: 100%;
   }  
@@ -123,10 +113,32 @@ section{
     text-align: left;
     border-bottom: 1px solid #ddd;
   }
-.container .row{
-    margin-top: 70px;
-} 
 
-#order{
-    display: none;
+  hr{
+    margin: 20px 110px 80px 110px;
+}
+
+.btn{
+    display: inline-block;
+    font-size: 20px;
+    color: #fff;
+    background: black;
+    border-radius: 20px;
+    cursor: pointer;
+    padding: .5rem 2rem;
+    border: 3px solid black;
+    transition-duration: 0.4s;
+}
+
+.btn:hover{
+    background: white;
+    color: black;
+    border: 3px solid black;
+}
+
+.footer{
+    text-align: center;
+    padding-bottom: 30px;
+    text-decoration: none;
+    color: black;
 }
