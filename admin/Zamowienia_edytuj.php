@@ -5,21 +5,28 @@
 	}
 
 	$connect=new mysqli('localhost', 'root', '', 'sklep');
-	$sql = "SELECT * FROM orders";
+
+	if(isset($_POST['submit_zapisz'])){
+		$status = $_POST['status'];
+		$id_zamowieniaa = $_POST['id'];
+		$sql_insert = "UPDATE orders SET Id_statusu=$status WHERE Id_zamowienia = $id_zamowieniaa";
+		mysqli_query($connect, $sql_insert);
+		header("Location: Zamowienia.php");
+	}
+
+	$id_zamowienia= $_POST['id_zamowienia'];
+
+	$sql = "SELECT * FROM orders WHERE Id_zamowienia = $id_zamowienia";
 	$result = mysqli_query($connect, $sql);
+	$row= mysqli_fetch_assoc($result);
 
+	$sql_status_zamowienia = "SELECT * FROM orders_status WHERE Id_statusu = $row[Id_statusu]";
+	$result_status_zamowienia = mysqli_query($connect, $sql_status_zamowienia);
+	$row_status_zamowienia = mysqli_fetch_assoc($result_status_zamowienia);
 
-	if(isset($_POST['najnowszy']))
-	{
-		$sql = "SELECT * FROM orders ORDER BY Data_zamowienia DESC";
-		$result = mysqli_query($connect, $sql);
-	}
+	$sql_status= "SELECT * FROM orders_status WHERE Id_statusu != $row[Id_statusu]";
+	$result_status = mysqli_query($connect, $sql_status);
 
-	if(isset($_POST['najstarszy']))
-	{
-		$sql = "SELECT * FROM orders ORDER BY Data_zamowienia ASC";
-		$result = mysqli_query($connect, $sql);
-	}
 ?>
 <!DOCTYPE html>
 <html lang="pl">
@@ -81,14 +88,11 @@
 
 		 <div class="list-container">
             <h1 style="text-align: center">
-                Lista zamówień <br>
-				<form method='POST'>
-					<button name='najnowszy' class="btn">Od najnowszego</button>
-					<button name='najstarszy' class="btn">Od najstarszego</button>
-				</from>
+                Edytuj zamówienie
             </h1>
             <br>
             <table id="table">
+			<form method='POST'>
                 <tr>
                     <td>Numer zamówienia</td>
                     <td>Data zamówienia</td>
@@ -96,32 +100,34 @@
                     <td>Modyfikacje</td>
                 </tr>
                 <?php
-                    for($i=0; $i<mysqli_num_rows($result); $i++)
-                    {
-                        $row = mysqli_fetch_assoc($result);
-						$sql_status = "SELECT * FROM orders_status WHERE Id_statusu = $row[Id_statusu]";
-						$result_status = mysqli_query($connect, $sql_status);
-						$row_status = mysqli_fetch_assoc($result_status);
-                        echo
-                        "<tr>
-                            <td>$row[Nr_zamowienia]</td>
-                            <td>$row[Data_zamowienia]</td>
-                            <td>$row_status[Nazwa]</td>
-                            <td>
-							<form style='display: none;'>
-							</form>
-							<form method='POST' action='Zamowienia_edytuj.php'>
-								<input type='hidden' name='id_zamowienia' value='$row[Id_zamowienia]'>
-								<button class='btn'>Edytuj</button>
-							</form>
-							<form method='POST' action='Zamowienia_info.php'>
-								<input type='hidden' name='id_zamowienia' value='$row[Id_zamowienia]'>
-								<button name='submit_sprawdz' class='btn'>Sprawdź</button>
-							</form>
-                            </td>
-                        </tr>";
-                    }
+				echo<<<html
+					<tr>
+					<td>$row[Nr_zamowienia]</td>
+					<td>$row[Data_zamowienia]</td>
+					<td>
+					<select name='status'>
+				html;
+						echo<<<html
+							<option value='$row_status_zamowienia[Id_statusu]'>$row_status_zamowienia[Nazwa]</option>
+						html;
+						for($i = 0; $i < mysqli_num_rows($result_status); $i++)
+						{
+							$row_status = mysqli_fetch_assoc($result_status);
+							echo"
+								<option value='$row_status[Id_statusu]'>$row_status[Nazwa]</option>
+							";
+						}
+				echo<<<html
+						</select>
+						</td>
+						<td>
+							<input type='hidden' name='id' value='$row[Id_zamowienia]'>
+							<button name='submit_zapisz' class='btn'>Zapisz</button>
+						</td>
+					</tr>
+				html;
                 ?>
+				</form>
             </table>
 		</div>
 
@@ -129,5 +135,6 @@
 	<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 	 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+	<script src="js/zamowienia.js"></script>
 </body>
 </html>

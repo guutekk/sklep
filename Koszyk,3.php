@@ -7,7 +7,7 @@
     $id_klienta = $_SESSION['id'];
     $connect=new mysqli('localhost', 'root', '', 'sklep');
 
-    $sql_koszyk = "SELECT c.Ilosc, c.Id_klienta,c.Id_produktu, p.Nazwa, p.Cena FROM carts c JOIN products p USING(Id_produktu) WHERE c.Id_klienta = $id_klienta AND c.Status = 0";
+    $sql_koszyk = "SELECT c.Ilosc, c.Id_klienta, c.Id_produktu, p.Ilosc prilosc, p.Nazwa, p.Cena FROM carts c JOIN products p USING(Id_produktu) WHERE c.Id_klienta = $id_klienta AND c.Status = 0";
     $result_koszyk = mysqli_query($connect, $sql_koszyk);
 
     $cena_suma = 0;
@@ -23,6 +23,8 @@
         }
 
         $cena_suma+=$cena;
+
+
     }
 
 
@@ -63,6 +65,17 @@
 
         $sql_cart = "UPDATE carts SET `Status`=1 , Nr_zamowienia = $nr_zamowienia WHERE `Status` = 0 AND Id_klienta = $id_klienta AND Nr_zamowienia =0";
         mysqli_query($connect, $sql_cart);
+
+        for($i=0; $i<mysqli_num_rows($result_koszyk); $i++)
+        {
+            $row = mysqli_fetch_assoc($result_koszyk);
+            $ilosc = $row['Ilosc'];
+            $ilosc_produkt = $row['prilosc'];
+            $ilosc_odjac =$ilosc_produkt-$ilosc;
+
+            $sql_product = "UPDATE products SET Ilosc = $ilosc_odjac WHERE Id_produktu = $row[Id_produktu]";
+            mysqli_query($connect, $sql_product);
+        }
 
         header("Location: Zamowienie.php");
      }
@@ -259,6 +272,7 @@
                             </tr>
                         </table>
                     </div>
+                    
                     <button class='btn' name='submit_order'>Zamawiam i płacę</button>
                 </div>
             </div>

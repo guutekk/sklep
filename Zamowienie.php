@@ -92,7 +92,7 @@
                 </div>
                 <div class="col-md-offset-1 col-md-10">
                     <h2>Dziekuje za zakup w naszym sklepie, mamy nadzieje że szybko do nas wrócisz :)</h2>
-                    <h4>Za chwile zostaniesz przeniesiony na stronę glówna!</h4>
+                    <h4>Za chwile zostaniesz przeniesiony na stronę główna!</h4>
                 </div>
             </div>
         </div>

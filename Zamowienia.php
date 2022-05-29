@@ -160,7 +160,8 @@ session_start();
                                     $row_status[Nazwa]
                                 </td>
                                 <td>
-                                    <form>
+                                    <form method='POST' action='Zamowienia_info.php'>
+                                        <input type='hidden' name='id' value='$row_zamowienie[Id_zamowienia]'>
                                         <button class='btn'>Zobacz</button>
                                     </form>
                                 </td>

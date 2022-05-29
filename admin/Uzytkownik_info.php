@@ -273,8 +273,10 @@
                                     $row_status[Nazwa]
                                 </td>
                                 <td>
-                                    <form>
-                                        <button class='btn'>Zobacz</button>
+                                    <form method='POST' action='Zamowienia_info.php'>
+                                        <input type='hidden' name='id_uzytkownika' value='$row_zamowienie[Id_klienta]'>
+                                        <input type='hidden' name='id_zamowienia' value='$row_zamowienie[Id_zamowienia]'>
+                                        <button name='user_info' class='btn'>Zobacz</button>
                                     </form>
                                 </td>
                             </tr>

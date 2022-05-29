@@ -35,7 +35,7 @@
         else if($value=='3')
         {
             $sql = "SELECT * FROM products";
-        $result = mysqli_query($connect, $sql);
+            $result = mysqli_query($connect, $sql);
         }
     }
 
@@ -56,7 +56,7 @@
         else if($value=='3')
         {
             $sql = "SELECT * FROM products";
-        $result = mysqli_query($connect, $sql);
+            $result = mysqli_query($connect, $sql);
         }
     }
 ?>
