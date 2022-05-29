@@ -70,7 +70,7 @@
             <?php 
             	echo "<input type='text' name='nazwa' required value='$row[Nazwa]'>"
 			?>
-			<input type="submit" name="submit" value="Edytuj produkt" class="form-btn">
+			<input type="submit" name="submit" value="Edytuj kategorie" class="form-btn">
 			<br>
 			<a href="Kategorie.php" class="btn">Powrót</a>
 			</form>

@@ -202,7 +202,7 @@
                                         <td>Kod pocztowy</td>
                                         <td>
                                     
-                                        <input type='text' name='kod_pocztowy' required value='$row_pocztowy'>
+                                        <input type='text' name='kod_pocztowy' minlength="5" maxlength="5" required value='$row_pocztowy'>
                                         
                                         </td>
                                     </tr>
